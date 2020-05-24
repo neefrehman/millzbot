@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 require("dotenv").config();
 
 const modelEndpoint =
-    process.env.CONTEXT !== "local"
+    process.env.LOCATION_CONTEXT !== "local"
         ? "https://gpt-tfsma6beea-ez.a.run.app/"
         : "http://0.0.0.0:8080";
 

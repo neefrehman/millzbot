@@ -1,10 +1,11 @@
-node_modules
-
 training/data
 training/output
 
 server/model/checkpoint
 
-.env
+www/.netlify
+www/functions-built
+www/node_modules
+www/.env
 
-.netlify/
+.temp

@@ -73,3 +73,7 @@ we’re looking for a DATA SCIENTIST @ustwo - must have Science GCSE and be good
 ```
 I have ADHD so I have to read and write on the move. I actually don't even understand. How on earth can a thing have this much nuance to it!
 ```
+
+```
+I literally actually cannot wait until the release of Monument Valley 2 (coming out in a few months) on @FairLifers this month of 2018. The future lies in making games.
+```

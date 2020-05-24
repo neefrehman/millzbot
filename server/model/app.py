@@ -56,7 +56,7 @@ async def homepage(request):
     text = generate_text()
 
     # Retry once if returned text is empty (may happen with prompts)
-    text = generate_text() if len(text) == 0 else text
+    text = generate_text() if len(text) == 0 and '<|startoftext|>' not in text else text
 
     generate_count += 1
     if generate_count == 8:
