@@ -1,0 +1,16 @@
+{
+  "name": "millzbot-slack-endpoint",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@slack/web-api": "^5.8.0",
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "license": "MIT"
+}

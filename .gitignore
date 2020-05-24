@@ -1,0 +1,10 @@
+node_modules
+
+training/data
+training/output
+
+server/model/checkpoint
+
+.env
+
+.netlify/

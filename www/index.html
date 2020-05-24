@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Millzbot</title>
+    <meta name="description" content="A GPT-2 chatbot trained on @millsustwo's tweets, and a guide to making your own.">
+    <meta name="author" content="Neef Rehman">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://millzbot.neef.co/">
+    <meta property="og:title" content="Millzbot">
+    <meta property="og:description" content="A GPT-2 chatbot trained on @millsustwo's tweets, and a guide to making your own.">
+    <meta property="og:image" content="">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://millzbot.neef.co/">
+    <meta property="twitter:title" content="Millzbot">
+    <meta property="twitter:description" content="A GPT-2 chatbot trained on @millsustwo's tweets, and a guide to making your own.">
+    <meta property="twitter:image" content="">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+</head>
+
+<style>
+    * {
+        margin: 0;
+    }
+
+    body {
+        background-color: #f9f911;
+        color: #1f1f1f;
+        font-family: monaco, menlo, monospace;
+        font-size: 16px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        min-height: 95vh;
+        margin: 2.5vh 20px;
+    }
+    @media (max-width: 580px) {
+        body {
+            font-size: 14px;
+        }
+    }
+
+    header {
+        max-width: 530px;
+    }
+    header > * {
+        margin-bottom: 1rem;
+    }
+    h1 {
+        font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+        font-size: 2.5em;
+    }
+
+    .chat-window {
+        background-color: #f7f7f7;
+        border-radius: 15px;
+        width: 550px;
+        height: 38vh;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .chat-window::-webkit-scrollbar {
+        display: none;
+    }
+    @media (max-width: 580px) {
+        .chat-window {
+            width: 380px;
+        }
+    }
+    @media (max-width: 420px) {
+        .chat-window {
+            width: 310px;
+        }
+    }
+
+    .response-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .response-container p {
+        font-family: monaco, menlo, monospace;
+        font-size: 0.84em;
+        margin: 10px;
+        padding: 16px;
+        max-width: max-content;
+        height: 0;
+        text-align: left;
+        border-radius: 25px;
+        transform: translateY(200%);
+        transition: transform 1000ms cubic-bezier(1, 0.1, 0.1, 1);
+    }
+    .response-container p.loaded {
+        transform: translateY(0);
+        height: max-content;
+    }
+    .response-container p.prompt {
+        align-self: flex-end;
+        background-color: aquamarine;
+    }
+    .response-container p.response {
+        align-self: flex-start;
+        background-color: bisque;
+    }
+    .response-container p.loading-indicator {
+        color: #938474;
+    }
+    .response-container p.loading-indicator::after {
+        content: "...";
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        animation: ellipsis steps(4, end) 1000ms infinite;
+        width: 0;
+    }
+    @keyframes ellipsis {
+        to {
+            width: 2.2em;    
+        }
+    }
+
+    fieldset {
+        border: none
+    }
+    input {
+        cursor: pointer;
+        font-family: monaco, menlo, monospace;
+        font-size: 0.78em;
+        padding: 12px;
+        background-color: aqua;
+        border: none;
+        border-radius: 15px;
+        transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 400ms ease;
+    }
+    input[type="button"] {
+        font-weight: bold;
+        color: #5f5f00;
+        text-decoration: underline;
+        padding: 8px;
+        background-color: transparent !important;
+    }
+    input[type="text"] {
+        margin-top: -4px;
+        cursor: text;
+    }
+    input[type="submit"] {
+        font-size: 1em;
+        padding: 16px;
+    }
+    input:hover {
+        transform: scale(1.05);
+    }
+    form[disabled] input {
+        pointer-events: none;
+        background-color: #b2e9e9;
+    }
+</style>
+
+<body>
+    <header>
+        <!-- TODO: <img src="image.src"> -->
+        <h1>millzbot</h1>
+        <p>
+            Hi! I'm a GPT-2 bot that's been trained on
+            <a href="https://twitter.com/millsustwo" target="_blank" rel="noopener noreferrer">@millsustwo's</a>
+            tweets. Made by <a href="https://neef.co" target="_blank" rel="noopener noreferrer">Neef Rehman</a>.
+        </p>
+        <nav>
+            <a href="https://twitter.com/millzbot" target="_blank" rel="noopener noreferrer">Find me on twitter</a>
+            —
+            <a href="https://github.com/neefrehman/millzbot" target="_blank" rel="noopener noreferrer">Make your own bot</a>
+        </nav>
+    </header>
+
+    <div class="chat-window">
+        <div class="response-container"> </div>
+    </div>
+
+    <form>
+        <fieldset>
+            <input type="button" value="Write a prompt (experimental)">
+            <input type="text" placeholder="prompt..." style="display: none;">
+        </fieldset>
+        <input type="submit" value="Generate text">
+    </form>
+</body>
+
+<script>
+    const form = document.querySelector("form");
+    const promptButton = document.querySelector("input[type=button]");
+    const promptInput = document.querySelector("input[type=text]");
+    const responseContainer = document.querySelector(".response-container");
+
+    promptButton.addEventListener("click", () => {
+        promptInput.style.display = "inline-block";
+        promptButton.style.display = "none";
+        promptInput.focus();
+    });
+
+    const addBubble = (style, text) => {
+        const newBubble = document.createElement("p");
+        newBubble.className = style;
+        newBubble.innerText = text;
+        responseContainer.appendChild(newBubble);
+        setTimeout(() => newBubble.classList.add("loaded"), 50);
+
+        if (style === "response") {
+            loadingIndicator.classList.remove("loaded");
+            setTimeout(() => loadingIndicator.remove(), 150);
+            form.removeAttribute("disabled");
+        }
+    }
+
+    let loadingIndicator = document.createElement("p");
+    loadingIndicator.innerText = "thinking";
+    loadingIndicator.classList.add("response");
+    loadingIndicator.classList.add("loading-indicator");
+    
+    form.onsubmit = async event => {
+        event.preventDefault();
+        form.setAttribute("disabled", true);
+
+        if (promptInput.value) {
+            addBubble("prompt", promptInput.value);
+        } else {
+            promptInput.style.display = "none";
+            promptButton.style.display = "inline-block";
+            promptInput.focus();
+        }
+
+        setTimeout(() => responseContainer.appendChild(loadingIndicator), 100);
+        setTimeout(() => loadingIndicator.classList.add("loaded"), 300);
+
+        const requestBody = promptInput.value
+            ? { prompt: promptInput.value }
+            : {};
+            
+        promptInput.value = null;
+            
+        const request = await fetch("/.netlify/functions/generate-text", {
+            method: "POST",
+            body: JSON.stringify(requestBody)
+        });
+
+        const generatedText = await request.json();
+
+        addBubble("response", generatedText)
+    }
+</script>
+
+</html>
