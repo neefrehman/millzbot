@@ -1,5 +1,4 @@
 [build]
-  base = "www/"
+  base = "/"
   command = "npm run build"
   functions = "functions-built"
-  publish = "www/build-output"
