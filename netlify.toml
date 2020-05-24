@@ -2,4 +2,3 @@
   base = "www/"
   command = "npm run build"
   functions = "functions-built"
-  publish = "www/build-output"
