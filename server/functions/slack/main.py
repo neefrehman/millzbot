@@ -51,10 +51,10 @@ def handle_slack_request(request):
     if STAGE is "prod":
         if not signature_verifier.is_valid_request(request.get_data(), request.headers):
             return form_response(403, {"Error": "Bad Request Signature"})
-        # if request.headers["X-Slack-Retry-Num"] != "1":
-        #     return form_response(200, "OK")
-        #     Couldn't get this to work so I split post_response_to_slack into a different process
-        #     so I can respond to slack with a 200 faster (so they don't retry)
+        if request.headers["X-Slack-Retry-Num"] != "1":
+            return form_response(200, "OK")
+        #   Couldn't get this to work so I also split post_response_to_slack into a different process
+        #   so I can respond to slack with a 200 faster (so they don't retry)
 
     parsed_request = request.get_json(silent=True)
 
