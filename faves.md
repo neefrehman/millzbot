@@ -81,3 +81,7 @@ I literally actually cannot wait until the release of Monument Valley 2 (coming 
 ```
 I’m actually scared to death of computer generated shit.
 ```
+
+```
+I'm like a magnet for this new generation of incredible humans
+```

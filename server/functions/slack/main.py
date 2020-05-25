@@ -33,14 +33,17 @@ def form_response(status_code, body):
         "body": body
     })
 
+# def post_response_to_slack():
+
+
 def handle_slack_request(request):
     if request.method != "POST":
         return form_response(405, {"Error": "only POST requests are accepted"})
 
     if STAGE is "prod":
         if not signature_verifier.is_valid_request(request.get_data(), request.headers):
-            return form_response(400, {"Error": "Bad Request Signature"})
-        if request.headers["x-slack-retry-num"] != 1:
+            return form_response(403, {"Error": "Bad Request Signature"})
+        if request.headers["X-Slack-Retry-Num"] != "1":
             return form_response(200, "OK")
 
     parsed_request = request.get_json(silent=True)
