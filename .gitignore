@@ -6,6 +6,7 @@ server/model/checkpoint
 www/.netlify
 www/functions-built
 www/node_modules
-www/.env
+
+.env
 
 .temp

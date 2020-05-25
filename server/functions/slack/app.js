@@ -1,14 +1,8 @@
 const { WebClient } = require("@slack/web-api");
-const express = require("express");
-
-const app = express();
-const port = 5555;
 
 const slackWebClient = new WebClient(process.env.SLACK_TOKEN);
 const modelEndpoint = "https://gpt-tfsma6beea-ez.a.run.app/";
 const REQUEST_TOKEN = os.environ.get('REQUEST_TOKEN') // TODO: fix
-
-app.use(express.json());
 
 app.post("/", async (req, res) => {
     const body = req.body;

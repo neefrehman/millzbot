@@ -2,7 +2,6 @@ from starlette.applications import Starlette
 from starlette.responses import UJSONResponse
 import gpt_2_simple as gpt2
 import tensorflow as tf
-import string
 import uvicorn
 import os
 import gc
@@ -41,7 +40,7 @@ async def homepage(request):
 
     def generate_text():
         generated_text = gpt2.generate(sess,
-                            length=int(params.get('length', 300)),
+                            length=int(params.get('length', 280)),
                             temperature=float(params.get('temperature', 0.9)),
                             top_p=float(params.get('top_p', 0.7)),
                             truncate=params.get('truncate', '<|endoftext|>'),
@@ -55,9 +54,10 @@ async def homepage(request):
         return generated_text
 
     text = generate_text()
+    text = text.replace('<|startoftext|>', '')
 
     # Retry once if returned text is empty (may happen with prompts)
-    text = generate_text() if len(text) == 0 and '<|startoftext|>' not in text else text
+    text = generate_text() if len(text) == 0 else text
 
     generate_count += 1
     if generate_count == 8:

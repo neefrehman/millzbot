@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +27,6 @@
     * {
         margin: 0;
     }
-
     body {
         background-color: #f9f911;
         color: #1f1f1f;
@@ -46,10 +44,8 @@
         body {
             font-size: 14px;
             min-height: 88vh;
-            margin: 6vh 20px;
         }
     }
-
     header {
         max-width: 530px;
     }
@@ -60,7 +56,9 @@
         font-family: "Comic Sans MS", "Comic Sans", sans-serif;
         font-size: 2.5em;
     }
-
+    a:hover {
+        font-style: italic;
+    }
     .chat-window {
         background-color: #fff;
         box-shadow: 0 3px 100px 0 rgba(79, 79, 0, 0.05);
@@ -88,7 +86,6 @@
             height: 30vh
         }
     }
-
     .response-container {
         margin-top: auto;
         display: flex;
@@ -97,6 +94,7 @@
     .response-container p {
         font-family: monaco, menlo, monospace;
         font-size: 0.84em;
+        line-height: 1.6;
         margin: 10px;
         padding: 16px;
         max-width: max-content;
@@ -123,11 +121,8 @@
         width: 0;
     }
     @keyframes ellipsis {
-        to {
-            width: 2.2em;    
-        }
+        to { width: 2.2em; }
     }
-
     fieldset {
         border: none
     }
@@ -190,7 +185,7 @@
 
     <div class="chat-window">
         <div class="response-container">
-            <p class="response">HELLO</p>
+            <p style="max-width: 320px;" class="response">HELLO! I take around 30 seconds to think of a reply so bear with me.</p>
         </div>
     </div>
 
