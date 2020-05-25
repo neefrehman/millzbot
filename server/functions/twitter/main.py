@@ -2,7 +2,6 @@
 # https://www.cookieshq.co.uk/posts/how-to-build-a-serverless-twitter-bot-with-python-and-google-cloud
 
 import os
-import sys
 import requests
 import tweepy
 from dotenv import load_dotenv
