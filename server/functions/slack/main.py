@@ -33,17 +33,6 @@ def form_response(status_code, body):
         "body": body
     })
 
-def post_response_to_slack(prompt_text, channel_id):
-    req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
-    text = req.json()["text"]
-    text = (text[:350]) if len(text) >= 350 else text
-    
-    generated_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
-
-    response = slack_client.chat_postMessage(
-        channel=channel_id,
-        text=generated_text)
-
 def handle_slack_request(request):
     if request.method != "POST":
         return form_response(405, {"Error": "only POST requests are accepted"})
@@ -55,7 +44,7 @@ def handle_slack_request(request):
             return form_response(200, "OK")
         #   Couldn't get this to work so I also split post_response_to_slack into a different process
         #   so I can respond to slack with a 200 faster (so they don't retry). Still not working!
-        #   TODO: https://github.com/slackapi/python-slackclient/issues/335
+        #   TODO: ttps://github.com/slackapi/python-slackclient/issues/335
 
     parsed_request = request.get_json(silent=True)
 
@@ -69,10 +58,16 @@ def handle_slack_request(request):
         channel_id = slack_event["channel"]
         bot_name = "<@U014L6G3MQ9>" # TODO: swap for ustwo slack
         prompt_text = input_text.replace(bot_name, "")
+        prompt_text = "<|startoftext|>" if len(prompt_text) <= 3 else prompt_text
 
-        background_thread = Thread(target=post_response_to_slack,
-                                   kwargs={"prompt_text": prompt_text, "channel_id": channel_id})
-        background_thread.start()
-        background_thread.join()
+        req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
+        text = req.json()["text"]
+        text = (text[:350]) if len(text) >= 350 else text
+        
+        response_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
+
+        response = slack_client.chat_postMessage(
+            channel=channel_id,
+            text=response_text)
 
     return form_response(200, "OK")

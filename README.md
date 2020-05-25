@@ -1,4 +1,4 @@
-[image/gif]
+<img src="banner.png" alt="Mills with robot antennae" width="100%">
 
 # millzbot
 A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
@@ -13,6 +13,8 @@ After seeing so many projects being made with [OpenAI's GPT-2](https://openai.co
 The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo)
 
 [Slack screen recording]
+
+[See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/faves.md)
 
 ## Make your own
 
