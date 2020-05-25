@@ -54,7 +54,8 @@ def handle_slack_request(request):
         if request.headers["X-Slack-Retry-Num"] != "1":
             return form_response(200, "OK")
         #   Couldn't get this to work so I also split post_response_to_slack into a different process
-        #   so I can respond to slack with a 200 faster (so they don't retry)
+        #   so I can respond to slack with a 200 faster (so they don't retry). Still not working!
+        #   TODO: https://github.com/slackapi/python-slackclient/issues/335
 
     parsed_request = request.get_json(silent=True)
 
@@ -69,6 +70,9 @@ def handle_slack_request(request):
         bot_name = "<@U014L6G3MQ9>" # TODO: swap for ustwo slack
         prompt_text = input_text.replace(bot_name, "")
 
-        post_response_to_slack(prompt_text, channel_id)
+        background_thread = Thread(target=post_response_to_slack,
+                                   kwargs={"prompt_text": prompt_text, "channel_id": channel_id})
+        background_thread.start()
+        background_thread.join()
 
     return form_response(200, "OK")
