@@ -33,8 +33,16 @@ def form_response(status_code, body):
         "body": body
     })
 
-# def post_response_to_slack():
+def post_response_to_slack(prompt_text, channel_id):
+    req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
+    text = req.json()["text"]
+    text = (text[:350]) if len(text) >= 350 else text
+    
+    generated_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
 
+    response = slack_client.chat_postMessage(
+        channel=channel_id,
+        text=generated_text)
 
 def handle_slack_request(request):
     if request.method != "POST":
@@ -43,8 +51,10 @@ def handle_slack_request(request):
     if STAGE is "prod":
         if not signature_verifier.is_valid_request(request.get_data(), request.headers):
             return form_response(403, {"Error": "Bad Request Signature"})
-        if request.headers["X-Slack-Retry-Num"] != "1":
-            return form_response(200, "OK")
+        # if request.headers["X-Slack-Retry-Num"] != "1":
+        #     return form_response(200, "OK")
+        #     Couldn't get this to work so I split post_response_to_slack into a different process
+        #     so I can respond to slack with a 200 faster (so they don't retry)
 
     parsed_request = request.get_json(silent=True)
 
@@ -57,17 +67,8 @@ def handle_slack_request(request):
         input_text = slack_event["text"]
         channel_id = slack_event["channel"]
         bot_name = "<@U014L6G3MQ9>" # TODO: swap for ustwo slack
-
         prompt_text = input_text.replace(bot_name, "")
 
-        req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
-        text = req.json()["text"]
-        text = (text[:350]) if len(text) >= 350 else text
-        
-        generated_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
-
-        response = slack_client.chat_postMessage(
-            channel=channel_id,
-            text=generated_text)
+        post_response_to_slack(prompt_text, channel_id)
 
     return form_response(200, "OK")
