@@ -19,7 +19,6 @@ REQUEST_TOKEN = os.environ["REQUEST_TOKEN"]
 STAGE = os.environ.get("STAGE", None)
 
 MODEL_ENDPOINT = "https://gpt-tfsma6beea-ez.a.run.app/"
-SLACK_URL = "https://slack.com/api/chat.postMessage"
 
 slack_client = WebClient(token=SLACK_BOT_USER_TOKEN)
 signature_verifier = SignatureVerifier(os.environ["SLACK_SIGNING_SECRET"])
@@ -41,6 +40,8 @@ def handle_slack_request(request):
     if STAGE is "prod":
         if not signature_verifier.is_valid_request(request.get_data(), request.headers):
             return form_response(400, {"Error": "Bad Request Signature"})
+        if request.headers["x-slack-retry-num"] != 1:
+            return form_response(200, "OK")
 
     parsed_request = request.get_json(silent=True)
 
@@ -52,16 +53,18 @@ def handle_slack_request(request):
     if slack_event["type"] == "app_mention":
         input_text = slack_event["text"]
         channel_id = slack_event["channel"]
+        bot_name = "<@U014L6G3MQ9>" # TODO: swap for ustwo slack
 
-        # prompt_text = input_text.replace("<@millzbot>", "")
+        prompt_text = input_text.replace(bot_name, "")
 
-        # req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
-        # text = req.json()["text"]
+        req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
+        text = req.json()["text"]
+        text = (text[:350]) if len(text) >= 350 else text
         
-        # generated_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
+        generated_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
 
         response = slack_client.chat_postMessage(
             channel=channel_id,
-            text=input_text.replace("<@A0147PCH0GK>", "")) # TODO: swap
+            text=generated_text)
 
     return form_response(200, "OK")

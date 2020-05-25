@@ -39,6 +39,7 @@ async def homepage(request):
                              headers=response_header)
 
     def generate_text():
+        generate_count += 1
         generated_text = gpt2.generate(sess,
                             length=int(params.get('length', 280)),
                             temperature=float(params.get('temperature', 0.9)),
@@ -55,12 +56,12 @@ async def homepage(request):
 
     text = generate_text()
     text = text.replace('<|startoftext|>', '')
+    text = text.replace('<|endoftext|>', '')
 
     # Retry once if returned text is empty (may happen with prompts)
     text = generate_text() if len(text) == 0 else text
 
-    generate_count += 1
-    if generate_count == 8:
+    if generate_count == 10:
         # Reload model to prevent Graph/Session from going OOM
         tf.reset_default_graph()
         sess.close()
