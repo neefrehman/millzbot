@@ -2,6 +2,7 @@ from starlette.applications import Starlette
 from starlette.responses import UJSONResponse
 import gpt_2_simple as gpt2
 import tensorflow as tf
+import string
 import uvicorn
 import os
 import gc

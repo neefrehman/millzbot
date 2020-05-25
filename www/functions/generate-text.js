@@ -8,6 +8,24 @@ const modelEndpoint =
 
 const token = process.env.REQUEST_TOKEN;
 
+const timeoutPromise = (ms, promise) => {
+    return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => {
+            reject(new Error("request timeout :—)"));
+        }, ms);
+        promise.then(
+            (res) => {
+                clearTimeout(timeoutId);
+                resolve(res);
+            },
+            (err) => {
+                clearTimeout(timeoutId);
+                reject(err);
+            }
+        );
+    });
+};
+
 exports.handler = async function (event) {
     const options = await event.body;
     const parsedOptions = JSON.parse(options);
@@ -15,13 +33,16 @@ exports.handler = async function (event) {
     let response;
 
     try {
-        const request = await fetch(modelEndpoint, {
-            method: "POST",
-            body: JSON.stringify({
-                token,
-                ...parsedOptions
+        const request = await timeoutPromise(
+            90000,
+            fetch(modelEndpoint, {
+                method: "POST",
+                body: JSON.stringify({
+                    token,
+                    ...parsedOptions
+                })
             })
-        });
+        );
 
         const requestData = await request.json();
         const generatedText = await requestData.text;

@@ -3,7 +3,7 @@
 # millzbot
 A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
 
-## Introdcution
+## Introduction
 
 After seeing so many projects being made with [OpenAI's GPT-2](https://openai.com/blog/better-language-models/), I decided to give it a whirl myself as a first foray into training a machine learning model, as well as building bots for Slack and Twitter. It took me no time at all to arrive at the idea of using [ustwo](http://ustwo.com/) co-founder [@millsustwo](https://twitter.com/millsustwo)'s tweets to fine-tune the model (with his permission). If GPT-2 can adapt to his _unique_ writing style then it really is as good as they say.
 
@@ -47,12 +47,10 @@ To do this, you'll need to create a free Google Cloud Platform account and proje
 Now that our trained model is hosted online, we can make requests to it! An example of a request written in JavaScript could look like the following:
 
 ```js
-const getResponseFromModel = async () => {
-    const generatedText = await fetch(MODEL_ENDPOINT_URL, {
-        method: post,
-    });
-
-    return generatedText["text"];
+const getGeneratedText = async () => {
+    const request = await fetch(MODEL_ENDPOINT_URL);
+    const requestData = await request.json();
+    return requestData.text;
 };
 ```
 

@@ -77,3 +77,7 @@ I have ADHD so I have to read and write on the move. I actually don't even under
 ```
 I literally actually cannot wait until the release of Monument Valley 2 (coming out in a few months) on @FairLifers this month of 2018. The future lies in making games.
 ```
+
+```
+I’m actually scared to death of computer generated shit.
+```

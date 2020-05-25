@@ -39,12 +39,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-        min-height: 95vh;
-        margin: 2.5vh 20px;
+        min-height: 90vh;
+        margin: 4vh 20px;
     }
     @media (max-width: 580px) {
         body {
             font-size: 14px;
+            min-height: 88vh;
+            margin: 6vh 20px;
         }
     }
 
@@ -61,6 +63,7 @@
 
     .chat-window {
         background-color: #fff;
+        box-shadow: 0 3px 100px 0 rgba(79, 79, 0, 0.05);
         border-radius: 15px;
         width: 550px;
         height: 38vh;
@@ -186,7 +189,9 @@
     </header>
 
     <div class="chat-window">
-        <div class="response-container"> </div>
+        <div class="response-container">
+            <p class="response">HELLO</p>
+        </div>
     </div>
 
     <form>
@@ -213,9 +218,11 @@
     const addBubble = (style, text) => {
         const newBubble = document.createElement("p");
         newBubble.className = style;
-        newBubble.innerText = text;
-        responseContainer.appendChild(newBubble);
-        newBubble.scrollIntoView(false);
+        newBubble.innerHTML = text;
+        setTimeout(() => {
+            responseContainer.appendChild(newBubble);
+            newBubble.scrollIntoView(false);
+        }, style.includes("loading-indicator") ? 500 : 0);
 
         if (style === "response") {
             document.querySelector(".response.loading-indicator").remove();

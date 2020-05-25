@@ -41,7 +41,7 @@ Once done (which will take a while!), deploy the uploaded image from the [Contai
 Once you've done this, you should be all set up with an API to interact with your model. Neat! The `app.py` that takes the requests and runs the model includes default parameters for text generation (like the ones we saw earlier when generating text in the Colaboratory notebook). These can be overriden by parameters sent in the body of the request via JSON. An example of a request that overrides these defaults with JavaScript could look like the following (where MODEL_ENDPOINT_URL is the url provided by Cloud Run to your hosted model):
 
 ```js
-const getResponseFromModel = async () => {
+const getGeneratedText = async () => {
     const textGenerationOptions = {
         length: 200,
         top_p: 0.9,
@@ -49,12 +49,13 @@ const getResponseFromModel = async () => {
         include_prefix = false,
     }
 
-    const generatedText = await fetch(MODEL_ENDPOINT_URL, {
+    const request = await fetch(MODEL_ENDPOINT_URL, {
         method: post,
         body: JSON.stringify(textGenerationOptions)
     });
 
-    return generatedText;
+    const requestData = await request.json();
+    return requestData.text;
 };
 ```
 
