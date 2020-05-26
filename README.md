@@ -60,7 +60,7 @@ const getGeneratedText = async () => {
 
 Just like that we can now get GPT-2 generated text, fine-tuned with your dataset, from anywhere!
 
-For more complicated requests that may need the inputs or responses transformed, you may need to use a "middleware" API that can include it's own logic. In the `server/functions` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter and Slack), which are deployed as serverless functions (also on GCP).
+For more complicated requests that may need the inputs or responses transformed, you may need to use a "middleware" API that can include it's own logic. In the `server/functions` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter, Slack and the demo site), which are deployed as serverless functions (also on GCP).
 
 And that's about everything you need to get set up with your own GPT-2-based bot! 🤖
 
