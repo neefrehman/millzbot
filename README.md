@@ -1,6 +1,6 @@
 <img src="banner.png" alt="Mills with robot antennae" width="100%">
 
-# millzbot
+# millzbot [WORK IN PROGRESS]
 
 A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
 
