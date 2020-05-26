@@ -61,6 +61,4 @@ const getGeneratedText = async () => {
 
 ## Middleware API
 
-For this project I've also included some functions that act as a middleware API. These connect the model to the platforms that the bot will be interacting with (in this case, Twitter and Slack). I've done this to separate each platform's concerns and dependencies from one another. These are each deployed as [Google Cloud Functions](https://cloud.google.com/functions), and you can find them in the `api` folder.
-
-For the demo website (found in the `/www` folder), I've also created a `generate-text.js` function, which is deployed along with the site to [Netlify Functions](https://docs.netlify.com/functions/configure-and-deploy/). This allows me to hide the `REQUEST_TOKEN` as an environment variable. If you're not using a token for validation, you can simply request text form the Cloud Run server directly from the client.
+For this project I've also included some functions that act as a middleware API. These connect the model to the platforms that the bot will be interacting with (in this case, Twitter, Slack, and a website for the bot). I've done this to separate each platform's concerns and dependencies from one another. These are each deployed as [Google Cloud Functions](https://cloud.google.com/functions), and you can find them in the `api` folder.

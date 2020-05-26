@@ -24,12 +24,13 @@ const addBubble = (bubbleClass, text) => {
     );
 
     if (bubbleClass === "response") {
-        document.querySelector(".response.loading-indicator").remove();
+        document.querySelector(".response.loading-indicator")?.remove();
         form.removeAttribute("disabled");
     }
 };
 
-const endpoint_url = "http://0.0.0.0:8080"; // TODO url
+const endpoint_url =
+    "https://us-central1-millzbot.cloudfunctions.net/handle_frontend_request";
 
 form.onsubmit = async (event) => {
     event.preventDefault();
@@ -51,11 +52,13 @@ form.onsubmit = async (event) => {
 
     const request = await fetch(endpoint_url, {
         method: "POST",
-        mode: "no-cors",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(requestBody)
     });
     const generatedText = await request.json();
-    console.log(generatedText);
 
     addBubble("response", generatedText);
 };
