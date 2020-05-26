@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Millzbot</title>
+    <meta name="description" content="A GPT-2 chatbot trained on @millsustwo's tweets, and a guide to making your own.">
+    <meta name="author" content="Neef Rehman">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://millzbot.neef.co/">
+    <meta property="og:title" content="Millzbot">
+    <meta property="og:description" content="A GPT-2 chatbot trained on @millsustwo's tweets, and a guide to making your own.">
+    <meta property="og:image" content="https://millzbot.neef.co/meta_image.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://millzbot.neef.co/">
+    <meta property="twitter:title" content="Millzbot">
+    <meta property="twitter:description" content="A GPT-2 chatbot trained on @millsustwo's tweets, and a guide to making your own.">
+    <meta property="twitter:image" content="https://millzbot.neef.co/meta_image.png">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <img src="millzbot.png">
+        <h1>millzbot</h1>
+        <p>
+            I'm a GPT-2 bot that's been trained on
+            <a href="https://twitter.com/millsustwo" target="_blank" rel="noopener noreferrer">@millsustwo's</a>
+            tweets — by <a href="https://neef.co" target="_blank" rel="noopener noreferrer">Neef Rehman</a>.
+        </p>
+        <nav>
+            <a href="https://twitter.com/millzbot" target="_blank" rel="noopener noreferrer">Also on twitter</a>
+            |
+            <a href="https://github.com/neefrehman/millzbot" target="_blank" rel="noopener noreferrer">Make your own bot</a>
+        </nav>
+    </header>
+
+    <div class="chat-window">
+        <div class="response-container">
+            <p style="max-width: 320px;" class="response">HELLO! I take around 30 seconds to think of what to say so bear with me</p>
+            <p style="max-width: 360px;" class="response"> I also may not reply at all if I'm talking to someone else (there's only one of me!)</p>
+            <p class="response">¯\_(ツ)_/¯</p>
+        </div>
+    </div>
+
+    <form>
+        <fieldset>
+            <input type="button" value="Write a prompt (experimental)">
+            <input type="text" placeholder="prompt..." style="display: none;">
+        </fieldset>
+        <input type="submit" value="Generate text">
+    </form>
+    
+    <script src="main.js"></script>
+</body>
+
+</html>
