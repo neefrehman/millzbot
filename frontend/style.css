@@ -43,6 +43,14 @@ header {
 header > *:not(img) {
     margin-bottom: 1rem;
 }
+@media (max-width: 400px) {
+    header > *:not(img) {
+        margin-bottom: 0.8rem;
+    }
+}
+header p {
+    line-height: 1.4;
+}
 
 header img {
     max-width: 120px;
@@ -132,6 +140,11 @@ a:hover {
     max-width: max-content;
     text-align: left;
     border-radius: 25px;
+}
+@media (max-width: 580px) {
+    .response-container p {
+        margin: 5px 8px;
+    }
 }
 .response-container p.prompt {
     align-self: flex-end;
