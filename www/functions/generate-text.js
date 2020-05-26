@@ -1,11 +1,7 @@
 import fetch from "node-fetch";
 require("dotenv").config();
 
-const modelEndpoint =
-    process.env.LOCATION_CONTEXT !== "local"
-        ? "https://gpt-tfsma6beea-ez.a.run.app/"
-        : "http://0.0.0.0:8080";
-
+const modelEndpoint = "https://gpt-tfsma6beea-ez.a.run.app/";
 const token = process.env.REQUEST_TOKEN;
 
 const timeoutPromise = (ms, promise) => {
