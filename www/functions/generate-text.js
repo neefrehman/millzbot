@@ -47,10 +47,7 @@ exports.handler = async function (event) {
         const requestData = await request.json();
         const generatedText = await requestData.text;
 
-        response =
-            generatedText.length !== 0
-                ? JSON.stringify(generatedText)
-                : "I don't know what to say to that";
+        response = JSON.stringify(generatedText);
     } catch (err) {
         response = "I'm literally actually having an error right now: " + err;
     }

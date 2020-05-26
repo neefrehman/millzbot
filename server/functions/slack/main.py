@@ -51,8 +51,8 @@ def handle_slack_request(request):
     slack_event = parsed_request["event"]
 
     # Respond to slack challenge. Only needed at initial authentication
-    # if "challenge" in parsed_request:
-    #     return form_response(200, {"challenge": parsed_request["challenge"]})
+    if "challenge" in parsed_request:
+        return form_response(200, {"challenge": parsed_request["challenge"]})
 
     if slack_event["type"] == "app_mention":
         input_text = slack_event["text"]
@@ -63,10 +63,8 @@ def handle_slack_request(request):
 
         req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
         text = req.json()["text"]
-        text = (text[:350]) if len(text) >= 350 else text
+        response_text = (text[:350]) if len(text) >= 350 else text
         
-        response_text = "I literally actually couldn't come up with a response to that" if len(text) == 0 else text
-
         response = slack_client.chat_postMessage(
             channel=channel_id,
             text=response_text)

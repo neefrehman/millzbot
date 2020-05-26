@@ -30,7 +30,12 @@ header > *:not(img) {
 }
 
 header img {
-    max-width: 130px;
+    max-width: 120px;
+}
+@media (max-width: 580px) {
+    header img {
+        max-width: 110px;
+    }
 }
 header img:hover {
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;

@@ -39,13 +39,12 @@ async def homepage(request):
                              headers=response_header)
 
     def generate_text():
-        generate_count += 1
         generated_text = gpt2.generate(sess,
                             length=int(params.get('length', 280)),
                             temperature=float(params.get('temperature', 0.9)),
                             top_p=float(params.get('top_p', 0.7)),
                             truncate=params.get('truncate', '<|endoftext|>'),
-                            prefix=params.get('prompt', '<|startoftext|>')[:500],
+                            prefix=params.get('prompt', '<|startoftext|>')[:100],
                             include_prefix=str(params.get(
                              'include_prefix', False)).lower() == 'true',
                             return_as_list=True,
@@ -58,9 +57,11 @@ async def homepage(request):
     text = text.replace('<|startoftext|>', '')
     text = text.replace('<|endoftext|>', '')
 
-    # Retry once if returned text is empty (may happen with prompts)
-    text = generate_text() if len(text) == 0 else text
+    # Retry once if returned text is empty (may happen as millzbot isn't that good with prompts)
+    text = generate_text() if len(text) <= 2 else text
+    text = "I literally actually couldn't come up with something to say" if len(text) == 0 else text
 
+    generate_count += 1
     if generate_count == 10:
         # Reload model to prevent Graph/Session from going OOM
         tf.reset_default_graph()

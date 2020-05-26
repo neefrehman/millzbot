@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const promptButton = document.querySelector("input[type=button]");
 const promptInput = document.querySelector("input[type=text]");
+const chatWindow = document.querySelector(".chat-window");
 const responseContainer = document.querySelector(".response-container");
 
 promptButton.addEventListener("click", () => {
@@ -9,19 +10,20 @@ promptButton.addEventListener("click", () => {
     promptInput.focus();
 });
 
-const addBubble = (style, text) => {
+const addBubble = (bubbleClass, text) => {
     const newBubble = document.createElement("p");
-    newBubble.className = style;
+    newBubble.className = bubbleClass;
     newBubble.innerHTML = text;
+
     setTimeout(
         () => {
             responseContainer.appendChild(newBubble);
-            newBubble.scrollIntoView(false);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
         },
-        style.includes("loading-indicator") ? 500 : 0
+        bubbleClass.includes("loading-indicator") ? 500 : 0
     );
 
-    if (style === "response") {
+    if (bubbleClass === "response") {
         document.querySelector(".response.loading-indicator").remove();
         form.removeAttribute("disabled");
     }
