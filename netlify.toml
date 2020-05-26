@@ -4,6 +4,7 @@
   command = "netlify-lambda build functions"
 
 [[redirects]]
-  from = "/*"
+  from = "/"
   to = "www/"
   status = 200
+  force = true
