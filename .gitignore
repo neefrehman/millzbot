@@ -1,6 +1,6 @@
 training/data
 training/output
 server/model/checkpoint
-__pycache__
+__pycache__/
 .env
 .temp

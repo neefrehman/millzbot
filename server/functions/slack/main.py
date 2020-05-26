@@ -11,7 +11,7 @@ from slack.signature import SignatureVerifier
 from dotenv import load_dotenv
 
 load_dotenv()
-SLACK_BOT_USER_TOKEN=os.environ["SLACK_BOT_USER_TOKEN"]
+SLACK_BOT_USER_TOKEN=os.environ["SLACK_BOT_USER_TOKEN"] # TODO: swap for ustwo slack
 SLACK_SIGNING_SECRET = os.environ["SLACK_SIGNING_SECRET"]
 SLACK_CLIENT_ID = os.environ["SLACK_CLIENT_ID"]
 SLACK_CLIENT_SECRET = os.environ["SLACK_CLIENT_SECRET"]

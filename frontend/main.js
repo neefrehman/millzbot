@@ -71,7 +71,7 @@ form.onsubmit = async (event) => {
 
     setTimeout(() => {
         if (form.getAttribute("disabled") === "true") {
-            addBubble("response", "I'm taking too long. Must be busy right now");
+            addBubble("response", "I'm taking a while. Must be busy right now!");
         }
-    }, 70000);
+    }, 60000);
 };
