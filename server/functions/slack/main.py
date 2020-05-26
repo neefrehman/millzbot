@@ -48,11 +48,12 @@ def handle_slack_request(request):
             return form_response(403, {"Error": "Bad Request Signature"})
 
     parsed_request = request.get_json(silent=True)
-    slack_event = parsed_request["event"]
 
     # Respond to slack challenge. Only needed at initial authentication
     if "challenge" in parsed_request:
         return form_response(200, {"challenge": parsed_request["challenge"]})
+
+    slack_event = parsed_request["event"]
 
     if slack_event["type"] == "app_mention":
         input_text = slack_event["text"]

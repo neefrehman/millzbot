@@ -1,6 +1,6 @@
 <img src="banner.png" alt="Mills with robot antennae" width="100%">
 
-# millzbot [WORK IN PROGRESS]
+# millzbot
 
 A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
 
@@ -8,13 +8,13 @@ A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
 
 After seeing so many projects being made with [OpenAI's GPT-2](https://openai.com/blog/better-language-models/), I decided to give it a whirl myself as a first foray into training a machine learning model, as well as building bots for Slack and Twitter. It took me no time to think of using [@millsustwo](https://twitter.com/millsustwo)'s tweets to fine-tune the model (with his permission). If GPT-2 can adapt to his _unique_ writing style then it really is as good as they say.
 
-[Demo Link]
+[Talk to millzbot (live demo)](https://millzbot.neef.co/)
 
-[Twitter Screenshot]
+<!-- TODO: [Twitter Screenshot] -->
 
 The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo)
 
-[Slack screen recording]
+<!-- TODO: [Slack screen recording] -->
 
 [See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/faves.md)
 

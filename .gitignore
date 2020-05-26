@@ -1,12 +1,6 @@
 training/data
 training/output
-
 server/model/checkpoint
-
-www/.netlify
-www/functions-built
-www/node_modules
-
+__pycache__
 .env
-
 .temp

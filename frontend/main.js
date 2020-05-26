@@ -26,6 +26,13 @@ const addBubble = (bubbleClass, text) => {
     if (bubbleClass === "response") {
         document.querySelector(".response.loading-indicator")?.remove();
         form.removeAttribute("disabled");
+
+        if (!document.hasFocus()) {
+            document.title = "millzbot has replied";
+            window.addEventListener("focus", (e) => {
+                setTimeout(() => (document.title = "millzbot"), 500);
+            });
+        }
     }
 };
 
@@ -61,4 +68,10 @@ form.onsubmit = async (event) => {
     const generatedText = await request.json();
 
     addBubble("response", generatedText);
+
+    setTimeout(() => {
+        if (form.getAttribute("disabled") === "true") {
+            addBubble("response", "I'm taking too long. Must be busy right now");
+        }
+    }, 70000);
 };

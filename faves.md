@@ -89,3 +89,7 @@ I'm like a magnet for this new generation of incredible humans
 ```
 I'm sitting here. I'm lying here. I'm looking at the stars. And I'm utterly blown away by the way each one look at the utterly stunning picture. Such a lost art. Such a powerful reminder to all. Such a ID. Such a purpose in our world.
 ```
+
+```
+it's not often that i get so much goat excrement out of my juice.
+```
