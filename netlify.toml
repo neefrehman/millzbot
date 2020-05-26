@@ -1,0 +1,9 @@
+[build]
+  base = "www"
+  publish = "www"
+  command = "netlify-lambda build functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
