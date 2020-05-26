@@ -37,21 +37,22 @@ def handle_slack_request(request):
     if request.method != "POST":
         return form_response(405, {"Error": "only POST requests are accepted"})
 
+    # Respond quickly to slack retry attempts to stop them coming, since generating text takes ages
+    # https://github.com/slackapi/python-slackclient/issues/335
+    if "X-Slack-Retry-Num" in request.headers:
+        return form_response(200, "OK")
+
+    # Verify Slack signature. Seems to work OK but can't print the boolean result 🤔
     if STAGE is "prod":
         if not signature_verifier.is_valid_request(request.get_data(), request.headers):
             return form_response(403, {"Error": "Bad Request Signature"})
-        if request.headers["X-Slack-Retry-Num"] != "1":
-            return form_response(200, "OK")
-        #   Couldn't get this to work so I also split post_response_to_slack into a different process
-        #   so I can respond to slack with a 200 faster (so they don't retry). Still not working!
-        #   TODO: ttps://github.com/slackapi/python-slackclient/issues/335
 
     parsed_request = request.get_json(silent=True)
-
-    if "challenge" in parsed_request:
-        return form_response(200, {"challenge": parsed_request["challenge"]})
-
     slack_event = parsed_request["event"]
+
+    # Respond to slack challenge. Only needed at initial authentication
+    # if "challenge" in parsed_request:
+    #     return form_response(200, {"challenge": parsed_request["challenge"]})
 
     if slack_event["type"] == "app_mention":
         input_text = slack_event["text"]

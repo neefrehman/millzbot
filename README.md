@@ -1,8 +1,8 @@
+<img src="banner.png" alt="Mills with robot antennae" width="100%">
+
 # millzbot
 
 A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
-
-<img src="banner.png" alt="Mills with robot antennae" width="100%">
 
 ## Introduction
 
@@ -11,6 +11,7 @@ After seeing so many projects being made with [OpenAI's GPT-2](https://openai.co
 [Demo Link]
 
 [Twitter Screenshot]
+
 The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo)
 
 [Slack screen recording]
