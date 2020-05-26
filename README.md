@@ -1,7 +1,8 @@
-<img src="banner.png" alt="Mills with robot antennae" width="100%">
-
 # millzbot
+
 A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
+
+<img src="banner.png" alt="Mills with robot antennae" width="100%">
 
 ## Introduction
 
@@ -32,7 +33,7 @@ And at the end of it you should have your own GPT-2 bot (for free!). I highly re
 
 ### Training the model
 
-Clone or fork this repository and go to the `training` folder. In there you'll find [a script written by Max](https://github.com/minimaxir/download-tweets-ai-text-gen/blob/master/README.md) that can bulk download tweets from a user, and instructions on how to use it. Once you have the tweets downloaded, just follow the instructions on [Max's Colaboratory notebook](https://colab.research.google.com/drive/1qxcQ2A1nNjFudAGN_mcMOnvV9sF_PkEb) to train the model with a GPU (for free).
+Clone or fork this repository and go to the `training` folder. In there you'll find [a script written by Max](https://github.com/minimaxir/download-tweets-ai-text-gen/blob/master/README.md) that can bulk download tweets from a user, and [instructions on how to use it](https://github.com/neefrehman/millzbot/tree/master/training#getting-training-data). Once you have the tweets downloaded, just follow the instructions on [Max's Colaboratory notebook](https://colab.research.google.com/drive/1qxcQ2A1nNjFudAGN_mcMOnvV9sF_PkEb) to train the model with a GPU (for free).
 
 If you're not training the model on tweets, and instead are using some other text source, then make sure you have that dataset ready, and use [this notebook](https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=H7LoMj4GA4n_) instead to do the training.
 
@@ -58,7 +59,7 @@ const getGeneratedText = async () => {
 
 Just like that we can now get GPT-2 generated text, fine-tuned with your dataset, from anywhere!
 
-For more complicated requests that may need the inputs or responses transformed, you may need to use a "middleware" API that can include it's own logic. In the `server/api` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter and Slack), which are deployed as serverless functions (also on GCP).
+For more complicated requests that may need the inputs or responses transformed, you may need to use a "middleware" API that can include it's own logic. In the `server/functions` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter and Slack), which are deployed as serverless functions (also on GCP).
 
 And that's about everything you need to get set up with your own GPT-2-based bot! 🤖
 
