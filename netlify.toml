@@ -7,4 +7,3 @@
   from = "/*"
   to = "www/"
   status = 200
-  force = true
