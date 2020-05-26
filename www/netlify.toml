@@ -1,0 +1,4 @@
+[build]
+  base = "www"
+  publish = "www"
+  functions = "www/functions-built"
