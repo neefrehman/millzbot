@@ -23,6 +23,19 @@ body {
     }
 }
 
+@media (max-width: 580px) {
+    body {
+        font-size: 14px;
+        min-height: 88vh;
+        margin: 2vh 20px
+    }
+}
+@media (max-width: 400px) {
+    body {
+        font-size: 13.2px;
+    }
+}
+
 header {
     max-width: 450px;
 }
@@ -35,7 +48,7 @@ header img {
 }
 @media (max-width: 580px) {
     header img {
-        max-width: 100px;
+        max-width: 90px;
     }
 }
 header img:hover {
