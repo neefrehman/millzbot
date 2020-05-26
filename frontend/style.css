@@ -22,18 +22,10 @@ body {
         margin: 2vh 20px
     }
 }
-
-@media (max-width: 580px) {
-    body {
-        font-size: 14px;
-        min-height: 88vh;
-        margin: 2vh 20px
-    }
-}
 @media (max-width: 400px) {
     body {
         font-size: 13.2px;
-        min-height: 86vh;
+        min-height: 85vh;
     }
 }
 
@@ -45,7 +37,7 @@ header > *:not(img) {
 }
 @media (max-width: 400px) {
     header > *:not(img) {
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.7rem;
     }
 }
 header p {
