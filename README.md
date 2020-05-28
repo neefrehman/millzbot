@@ -12,29 +12,29 @@ After seeing so many projects being made with [OpenAI's GPT-2](https://openai.co
 
 <!-- TODO: [Twitter Screenshot] -->
 
-The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo)
+<!-- The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo) -->
 
 <!-- TODO: [Slack screen recording] -->
 
-[See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/faves.md)
+[See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/blob/master/faves.md)
 
 ## Make your own
 
-On the whole the process was surprisingly easy, thanks hugely to [Max Woolf](https://github.com/minimaxir) and the guides/tools that he's already created around GPT-2. This project is an amalgamation of some of these resources, which I've included and linked throughout, along with some additions, like middleware API functions to provide responses from the trained model to different platforms (Slack and Twitter).
+On the whole the process was surprisingly easy, thanks hugely to [Max Woolf](https://github.com/minimaxir) and the writing/tools that he's already created around GPT-2. In this repo you'll find a summary of the process I used to make millzbot (with links to the guides and resources I used), and some of Max's tweet-fetching and server code. You'll also see some of my additional code, like middleware API layers to provide responses from the trained model to different platforms (Slack, Twitter and the demo site), written as serverless functions.
 
 The instructions below and code in this projects folders should cover everything you need to do the following:
 
 1. Get your initial dataset
 2. Use it to fine-tune a GPT-2 instance with [Google Colaboratory](https://colab.research.google.com/)
-3. Build and test your trained model locally with [Docker](https://docker.com/)
-4. Deploy your model to a server with [Cloud Run](https://cloud.google.com/run/)
+3. Build and test your trained model locally in a [Docker](https://docker.com/) container
+4. Deploy your container to a server with [Cloud Run](https://cloud.google.com/run/)
 5. Request generated text from it via simple `POST` requests or serverless functions
 
-And at the end of it you should have your own GPT-2 bot (for free!). I highly recommend that you also read through the resources that I reference for more detailed instructions and to get a more thorough understanding of GPT-2.
+And at the end of it you should have your own GPT-2 bot (for free!). I highly recommend that you also read through the links that I reference for more detailed instructions, and to get a more thorough understanding of GPT-2.
 
 ### Training the model
 
-Click the "use this template" button at the top right of the repo to and clone this repository. Then go to the `training` folder. In there you'll find [a script written by Max](https://github.com/minimaxir/download-tweets-ai-text-gen/blob/master/README.md) that can bulk download tweets from a user, and [instructions on how to use it](https://github.com/neefrehman/millzbot/tree/master/training#getting-training-data). Once you have the tweets downloaded, just follow the instructions on [Max's Colaboratory notebook](https://colab.research.google.com/drive/1qxcQ2A1nNjFudAGN_mcMOnvV9sF_PkEb) to train the model with a GPU (for free).
+Fork this repo and clone it to your computer, then go to the `training` folder. In there you'll find [a script written by Max](https://github.com/minimaxir/download-tweets-ai-text-gen/blob/master/README.md) that can bulk download tweets from a user, and [instructions on how to use it](https://github.com/neefrehman/millzbot/tree/master/training#getting-training-data). Once you have the tweets downloaded, just follow the instructions on [Max's Colaboratory notebook](https://colab.research.google.com/drive/1qxcQ2A1nNjFudAGN_mcMOnvV9sF_PkEb) to train the model with a GPU (for free).
 
 If you're not training the model on tweets, and instead are using some other text source, then make sure you have that dataset ready, and use [this notebook](https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=H7LoMj4GA4n_) instead to do the training.
 
@@ -77,6 +77,20 @@ Below are some of [Max Woolf](https://github.com/minimaxir)'s resources and guid
 - [Google Colaboratory — GPT-2 training guide (general)](https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=H7LoMj4GA4n_)
 
 - [GPT-2 Cloud Run guide](https://github.com/minimaxir/gpt-2-cloud-run)
+
+## Bot Ethics
+
+Bots represent a confusing area as far as ethics goes. There are plenty of thoughts online on the topic which I would urge you [to research](https://www.ecosia.org/search?q=ai+bot+ethics&addon=opensearch), but on a low level you should adhere to the following rules:
+
+1. Make sure to get permission from whoever you will be impersonating
+    - In my case I asked Mills and told him what data I would collect, and what the bot would be used for. Thankfully he granted me permission
+
+2. Make it obvious that your bot is a bot
+    - Stick it it the twitter name and bio, for example
+    - Say whether or not you are curating the output or if it's fully automated
+
+3. Don't keep hold of data that you don't need to
+    - Once you've fine-tuned your GPT-2 model and are happy with it, you shouldn't need the raw data anymore. Delete it to avoid any risk of mishandling
 
 ## License
 

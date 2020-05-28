@@ -13,23 +13,17 @@ body {
     align-items: center;
     justify-content: space-around;
     min-height: 90vh;
-    margin: 3vh 20px;
+    min-height: -webkit-fill-available;
+    /* margin: 3vh 20px; TODO: webkit body height trick */
 }
 @media (max-width: 580px) {
     body {
         font-size: 14px;
-        min-height: 88vh;
-        margin: 2vh 20px
-    }
-}
-@media (max-width: 400px) {
-    body {
-        font-size: 13.2px;
-        min-height: 85vh;
     }
 }
 
 header {
+    margin-top: 10px;
     max-width: 450px;
 }
 header > *:not(img) {
@@ -92,7 +86,8 @@ a:hover {
 
 .chat-window {
     background-color: #fff;
-    box-shadow: 0 3px 100px 0 rgba(79, 79, 0, 0.05);
+    border: 4px solid #1f1f1f;
+    box-shadow: 0 3px 70px 0 rgba(79, 79, 0, 0.05);
     border-radius: 15px;
     width: 550px;
     height: 38vh;
@@ -161,6 +156,9 @@ a:hover {
     to { width: 2.2em; }
 }
 
+form {
+    margin-bottom: 30px;
+}
 fieldset {
     border: none
 }
