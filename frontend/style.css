@@ -102,6 +102,7 @@ a:hover {
 }
 @media (max-width: 580px) {
     .chat-window {
+        border-width: 3px;
         width: 380px;
         height: 33vh
     }
