@@ -4,6 +4,9 @@ const promptInput = document.querySelector("input[type=text]");
 const chatWindow = document.querySelector(".chat-window");
 const responseContainer = document.querySelector(".response-container");
 
+const endpoint_url =
+    "https://us-central1-millzbot.cloudfunctions.net/handle_frontend_request";
+
 promptButton.addEventListener("click", () => {
     promptInput.style.display = "inline-block";
     promptButton.style.display = "none";
@@ -35,9 +38,6 @@ const addBubble = (bubbleClass, text) => {
         }
     }
 };
-
-const endpoint_url =
-    "https://us-central1-millzbot.cloudfunctions.net/handle_frontend_request";
 
 form.onsubmit = async (event) => {
     event.preventDefault();

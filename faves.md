@@ -51,3 +51,5 @@
 >I’m actually scared by how scared we all are of not being afraid of ourselves. By not being scared to be scared of ourselves. By embracing the idea that we’ll always be scared of ourselves. That we’ll always be ok. That being such a lie that we’ve always been ok. That we’ll always be good. That we’ll always be wonderful.
 
 >You cannot win with only promises. With only realness. Without actuality. You can only win if you can’t fulfil those expectations.
+
+>It's sad to think that even though we are at the forefront of actual real life we are also playing out in a history bubble. We are still making history...
