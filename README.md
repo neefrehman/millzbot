@@ -10,7 +10,12 @@ After seeing so many projects being made with [OpenAI's GPT-2](https://openai.co
 
 Luckily, it is that good! Millzbot lives [on Twitter](https://twitter.com/millzbot), on [a demo site](https://millzbot.neef.co/), and as a slackbot in ustwo's Slack workspace.
 
-![Twitter Screenshot](assets/tweet.png) ![Slackbot screen recording](assets/slack.gif)
+<table>
+  <tr>
+    <td><img src="assets/tweet.png" alt="Twitter screenshot" width="100%"></td>
+    <td><img src="assets/slack.gif" alt="Slackbot screen recording" width="100%"></td>
+  </tr>
+</table>
 
 (The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo))
 
