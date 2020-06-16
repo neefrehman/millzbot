@@ -1,4 +1,4 @@
-<img src="docs/banner.png" alt="Mills with robot antennae" width="100%">
+<img src="assets/banner.png" alt="Mills with robot antennae" width="100%">
 
 # millzbot
 
@@ -8,25 +8,19 @@ A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
 
 After seeing so many projects being made with [OpenAI's GPT-2](https://openai.com/blog/better-language-models/), I decided to give it a whirl myself as a first foray into training a machine learning model, as well as building bots for Slack and Twitter. It took me no time to think of using [@millsustwo](https://twitter.com/millsustwo)'s tweets to fine-tune the model (with his permission). If GPT-2 can adapt to his _unique_ writing style then it really is as good as they say.
 
-Luckily, it really is that good! Now millzbot lives on a demo site, on Twitter, and as a slackbot in ustwo's slack.
+Luckily, it is that good! Millzbot lives [on Twitter](https://twitter.com/millzbot), on [a demo site](https://millzbot.neef.co/), and as a slackbot in ustwo's Slack workspace.
 
-[Talk to millzbot (live demo)](https://millzbot.neef.co/)
-
-[Follow millzbot on Twitter](https://twitter.com/millzbot)
-
-![Twitter Screenshot](docs/tweet.png)
+![Twitter Screenshot](assets/tweet.png) ![Slackbot screen recording](assets/slack.gif)
 
 (The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo))
 
-<!-- ![Slackbot screen recording](docs/slack.gif) -->
-
-[See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/blob/master/faves.md)
+[Talk to millzbot (live demo)](https://millzbot.neef.co/) | [Follow millzbot on Twitter](https://twitter.com/millzbot) | [See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/blob/master/faves.md)
 
 ## Make your own
 
 On the whole the process was surprisingly easy, thanks hugely to [Max Woolf](https://github.com/minimaxir) and the writing/tools that he's already created around GPT-2. In this repo you'll find a summary of the process I used to make millzbot (with links to the guides and resources I used), and some of Max's tweet-fetching and server code. You'll also see some of my additional code, like middleware API layers to provide responses from the trained model to different platforms (Slack, Twitter and the demo site), written as serverless functions.
 
-The instructions below and code in this projects folders should cover everything you need to do the following:
+The instructions below and code in this project's folders should cover everything you need to do the following:
 
 1. Get your initial dataset
 2. Use it to fine-tune a GPT-2 instance with [Google Colaboratory](https://colab.research.google.com/)
@@ -64,7 +58,7 @@ const getGeneratedText = async () => {
 
 Just like that we can now get GPT-2 generated text, fine-tuned with your dataset, from anywhere!
 
-For more complicated requests that may need the inputs or responses transformed, you may need to use a "middleware" API that can include it's own logic. In the `server/functions` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter, Slack and the demo site), which are deployed as serverless functions (also on GCP).
+For more complicated requests that may need the inputs or responses manipulated, you may need to create a "middleware" API that can include it's own logic. In the `server/functions` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter, Slack and the demo site), which are deployed as serverless functions (also on GCP).
 
 And that's about everything you need to get set up with your own GPT-2-based bot! 🤖
 

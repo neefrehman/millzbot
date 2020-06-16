@@ -14,7 +14,6 @@ body {
     justify-content: space-around;
     min-height: 90vh;
     min-height: -webkit-fill-available;
-    /* margin: 3vh 20px; TODO: webkit body height trick */
 }
 @media (max-width: 580px) {
     body {

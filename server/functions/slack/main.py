@@ -11,7 +11,7 @@ from slack.signature import SignatureVerifier
 from dotenv import load_dotenv
 
 load_dotenv()
-SLACK_BOT_USER_TOKEN=os.environ["SLACK_BOT_USER_TOKEN"] # TODO: swap for ustwo slack
+SLACK_BOT_USER_TOKEN = os.environ["SLACK_BOT_USER_TOKEN"]
 SLACK_SIGNING_SECRET = os.environ["SLACK_SIGNING_SECRET"]
 SLACK_CLIENT_ID = os.environ["SLACK_CLIENT_ID"]
 SLACK_CLIENT_SECRET = os.environ["SLACK_CLIENT_SECRET"]
@@ -23,6 +23,7 @@ MODEL_ENDPOINT = "https://gpt-tfsma6beea-ez.a.run.app/"
 slack_client = WebClient(token=SLACK_BOT_USER_TOKEN)
 signature_verifier = SignatureVerifier(os.environ["SLACK_SIGNING_SECRET"])
 
+
 def form_response(status_code, body):
     return jsonify({
         "isBase64Encoded": True,
@@ -32,6 +33,7 @@ def form_response(status_code, body):
         },
         "body": body
     })
+
 
 def handle_slack_request(request):
     if request.method != "POST":
@@ -58,14 +60,19 @@ def handle_slack_request(request):
     if slack_event["type"] == "app_mention":
         input_text = slack_event["text"]
         channel_id = slack_event["channel"]
-        bot_name = "<@U014L6G3MQ9>" # TODO: swap for ustwo slack
-        prompt_text = input_text.replace(bot_name, "")
-        prompt_text = "<|startoftext|>" if len(prompt_text) <= 3 else prompt_text
+        bot_name = "<@U015GFAC2AE>"
+        # ^This was tricky to find. I had to change this script to get millzbot to respond with:
+        # input_text.replace("<@", "")) to get the bot name without Slack's formatting
 
-        req = requests.post(MODEL_ENDPOINT, json={"token": REQUEST_TOKEN, "prompt": prompt_text})  
+        prompt_text = input_text.replace(bot_name, "")
+        prompt_text = "<|startoftext|>" if len(
+            prompt_text) <= 3 else prompt_text
+
+        req = requests.post(MODEL_ENDPOINT, json={
+                            "token": REQUEST_TOKEN, "prompt": prompt_text})
         text = req.json()["text"]
         response_text = (text[:350]) if len(text) >= 350 else text
-        
+
         response = slack_client.chat_postMessage(
             channel=channel_id,
             text=response_text)
