@@ -53,3 +53,5 @@
 >You cannot win with only promises. With only realness. Without actuality. You can only win if you can’t fulfil those expectations.
 
 >It's sad to think that even though we are at the forefront of actual real life we are also playing out in a history bubble. We are still making history...
+
+>team. Ever wanted to start your own company? Ever wanted to learn how to build something useful out of nothing? Ever wanted to spend your free time building your own company? Ever wanted to disrupt the current iteration of your business? Ever wanted to turn a blind eye to all the changes and you are only now starting to grow? Then we have it. We have the need. And we are willing to do it. We are willing to do it now and then. But this is the journey we have chosen to make. This is the journey that makes our companies stronger. And this is the choice we have made. This post is for you.
