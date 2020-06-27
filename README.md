@@ -2,7 +2,7 @@
 
 # millzbot
 
-A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own!
+A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own
 
 ## Introduction
 
@@ -17,7 +17,7 @@ Luckily, it is that good! Millzbot lives [on Twitter](https://twitter.com/millzb
   </tr>
 </table>
 
-(The model is working fine. [He actually tweets like that!](https://twitter.com/millsustwo))
+(The model is working fine. [He actually tweets like that](https://twitter.com/millsustwo))
 
 [Talk to millzbot (live demo)](https://millzbot.neef.co/) | [Follow millzbot on Twitter](https://twitter.com/millzbot) | [See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/blob/master/faves.md)
 
