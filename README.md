@@ -47,9 +47,9 @@ The finetuning of GPT-2 could take hours to complete, so check on it every now a
 
 ### Deploying to a server
 
-Now that we've got our trained model ready to serve up text, it's time to put it somewhere! If you head to the `server` folder you'll see instructions in [it's readme](https://github.com/neefrehman/millzbot/server#deploying-your-model) for building and deploying your model, so you can start interacting with it on a server via HTTP. The instructions are derived from [this guide](https://github.com/minimaxir/gpt-2-cloud-run).
+Now that we've got our trained model ready to serve up text, it's time to put it somewhere! If you head to the `server` folder you'll see instructions in [it's readme](https://github.com/neefrehman/millzbot/tree/master/server#deploying-your-model) for building and deploying your model, so you can start interacting with it on a server via HTTP. The instructions are derived from [this guide](https://github.com/minimaxir/gpt-2-cloud-run).
 
-To do this, you'll need to create a free Google Cloud Platform account and project (that will use [Cloud Run](https://cloud.google.com/run/)), and install [Docker](https://docs.docker.com/get-docker/) and the [Google Cloud SDK](https://cloud.google.com/sdk/docs). It might be worth getting all of this set up while your model is training in the above step. Once this is done follow the steps in [`/server`'s readme](https://github.com/neefrehman/millzbot/server#deploying-your-model) to build and deploy your model.
+To do this, you'll need to create a free Google Cloud Platform account and project (that will use [Cloud Run](https://cloud.google.com/run/)), and install [Docker](https://docs.docker.com/get-docker/) and the [Google Cloud SDK](https://cloud.google.com/sdk/docs). It might be worth getting all of this set up while your model is training in the above step. Once this is done follow the steps in [`/server`'s readme](https://github.com/neefrehman/millzbot/tree/master/server#deploying-your-model) to build and deploy your model.
 
 ### Requesting generated text
 
@@ -65,7 +65,7 @@ const getGeneratedText = async () => {
 
 Just like that we can now get GPT-2 generated text, fine-tuned with your dataset, from anywhere!
 
-For more complicated requests that may need the inputs or responses manipulated, you may need to create a "middleware" API that can include it's own logic. In the `server/functions` folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter, Slack and the demo site), which are deployed as serverless functions (also on GCP).
+For more complicated requests that may need the inputs or responses manipulated, you may need to create a "middleware" API that can include it's own logic. In the [`server/functions`](https://github.com/neefrehman/millzbot/tree/master/server/functions) folder are some examples of functions I've written to do this, to handle requests for different platforms (Twitter, Slack and the demo site), which are deployed as serverless functions (also on GCP).
 
 And that's about everything you need to get set up with your own GPT-2-based bot! 🤖
 
