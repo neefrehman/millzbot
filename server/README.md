@@ -61,4 +61,4 @@ const getGeneratedText = async () => {
 
 ## Middleware API
 
-For this project I've also included some functions that act as a middleware API. These connect the model to the platforms that the bot will be interacting with (in this case, Twitter, Slack, and a website for the bot). I've done this to separate each platform's concerns and dependencies from one another. These are each deployed as [Google Cloud Functions](https://cloud.google.com/functions), and you can find them in the `api` folder.
+For this project I've also included some functions that act as a middleware API. These connect the model to the platforms that the bot will be interacting with (in this case, Twitter, Slack, and a website for the bot). I've done this to separate each platform's concerns and dependencies from one another. These are each deployed as [Google Cloud Functions](https://cloud.google.com/functions), and you can find them in the [`functions` folder](https://github.com/neefrehman/millzbot/tree/master/server/functions).
