@@ -1,18 +1,13 @@
-# Server-side code
+# Deploying your model
 
-This subdirectory contains the code to create a server that will run our GPT-2 model and respond to requests, as well as the middleware endpoints that will be making those requests — written as serverless functions (or lambdas).
-
-## Deploying your model
-
-For deploying the trained model to a server, I've closely followed Max Woolf's [GPT-2-cloud-run instructions](https://github.com/minimaxir/gpt-2-cloud-run), and you should to! I've included the `app.py` (with some modifiactions to the default parameters and logic for retrying if a response is blank) and `Dockerfile` from that repo in the `model` folder here to make it easier to start with the server. Once you've added your trained model (uncompressed) to that folder, the folder's structure should look something like this:
+To deploy the trained model to a server, I closely followed Max Woolf's [GPT-2-cloud-run instructions](https://github.com/minimaxir/gpt-2-cloud-run), and you should to! I've included the `app.py` (with some modifiactions to the default parameters and logic for retrying if a response is blank) and `Dockerfile` from that repo in this folder to make it easier to start with the server. Once you've added your trained model (uncompressed), this folder's structure should look something like this:
 
 ```bash
-|____model
-| |____checkpoint
-| | |____run1
-| | | |____lots-of-files.here
-| |____Dockerfile
-| |____app.py
+|____checkpoint
+| |____run1
+| | |____lots-of-files.here
+|____Dockerfile
+|____app.py
 ```
 
 Now that everything is in the right place, you'll need to create a free account and project on Google Cloud Platform to use [Cloud Run](https://cloud.google.com/run/), install [Docker](https://docs.docker.com/get-docker/) and the [Google Cloud SDK](https://cloud.google.com/sdk/docs), then build and push the the Docker container to Cloud Run using the code in [Max's instructions](https://github.com/minimaxir/gpt-2-cloud-run#how-to-build-the-container-and-start-cloud-run):
