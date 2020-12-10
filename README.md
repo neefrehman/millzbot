@@ -6,7 +6,7 @@ A GPT-2 chatbot trained on my bosses tweets, and a guide to making your own
 
 ## Introduction
 
-After seeing so many projects being made with [OpenAI's GPT-2](https://openai.com/blog/better-language-models/), I decided to give it a whirl myself as a first foray into training a machine learning model, as well as building bots for Slack and Twitter. It took me no time to think of using [@millsustwo](https://twitter.com/millsustwo)'s tweets to fine-tune the model (with his permission). If GPT-2 can adapt to his _unique_ writing style then it really is as good as they say.
+After seeing so many projects being made with [OpenAI's GPT-2](https://openai.com/blog/better-language-models/), I decided to give it a whirl as a first foray into training machine learning models, as well as building bots for Slack and Twitter. Naturally using [@millsustwo](https://twitter.com/millsustwo)'s tweets (with his permission) to fine-tune the model was the first thought I had. If GPT-2 can adapt to his _unique_ writing style then it really is as good as they say.
 
 Luckily, it is that good! Millzbot lives [on Twitter](https://twitter.com/millzbot), on [a demo site](https://millzbot.neef.co/), and as a slackbot in ustwo's Slack workspace.
 
@@ -17,7 +17,7 @@ Luckily, it is that good! Millzbot lives [on Twitter](https://twitter.com/millzb
   </tr>
 </table>
 
-(The model is working fine. [He actually tweets like that](https://twitter.com/millsustwo))
+(The model is working fine. [He actually tweets like that](https://twitter.com/millsustwo).)
 
 [Talk to millzbot (live demo)](https://millzbot.neef.co/) | [Follow millzbot on Twitter](https://twitter.com/millzbot) | [See some of my favourite responses from millzbot](https://github.com/neefrehman/millzbot/blob/master/faves.md)
 
@@ -47,7 +47,7 @@ The finetuning of GPT-2 could take hours to complete, so check on it every now a
 
 ### Deploying to a server
 
-Now that we've got our trained model ready to serve up text, it's time to put it somewhere! If you head to the [`/server`](https://github.com/neefrehman/millzbot/tree/master/server) folder you'll see instructions in [it's readme](https://github.com/neefrehman/millzbot/tree/master/server#deploying-your-model) for building and deploying your model, so you can start interacting with it on a server via HTTP. The instructions are derived from [this guide](https://github.com/minimaxir/gpt-2-cloud-run).
+Now that we've got our trained model ready to serve up text, it's time to put it somewhere! If you head to the [`/server`](https://github.com/neefrehman/millzbot/tree/master/server) folder you'll see instructions in [it's readme](https://github.com/neefrehman/millzbot/tree/master/server#deploying-your-model) for building and deploying your model, so you can start making requests to it via HTTP. The instructions are derived from [this guide](https://github.com/minimaxir/gpt-2-cloud-run).
 
 To do this, you'll need to create a free Google Cloud Platform account and project (that will use [Cloud Run](https://cloud.google.com/run/)), and install [Docker](https://docs.docker.com/get-docker/) and the [Google Cloud SDK](https://cloud.google.com/sdk/docs). It might be worth getting all of this set up while your model is training in the above step. Once this is done follow the steps in [`/server`'s readme](https://github.com/neefrehman/millzbot/tree/master/server#deploying-your-model) to build and deploy your model.
 
