@@ -111,7 +111,8 @@ resource "google_cloudfunctions_function" "handle_frontend_request" {
   region                = var.region
 
   environment_variables = {
-    REQUEST_TOKEN = var.request_token
+    REQUEST_TOKEN  = var.request_token
+    MODEL_ENDPOINT = google_cloud_run_service.gpt.status[0].url
   }
 }
 
@@ -142,6 +143,7 @@ resource "google_cloudfunctions_function" "handle_slack_request" {
 
   environment_variables = {
     REQUEST_TOKEN        = var.request_token
+    MODEL_ENDPOINT       = google_cloud_run_service.gpt.status[0].url
     SLACK_BOT_USER_TOKEN = var.SLACK_BOT_USER_TOKEN
     SLACK_CLIENT_ID      = var.SLACK_CLIENT_ID
     SLACK_CLIENT_SECRET  = var.SLACK_CLIENT_SECRET
@@ -177,6 +179,7 @@ resource "google_cloudfunctions_function" "handle_post_tweet" {
 
   environment_variables = {
     REQUEST_TOKEN   = var.request_token
+    MODEL_ENDPOINT  = google_cloud_run_service.gpt.status[0].url
     CONSUMER_KEY    = var.TWITTER_CONSUMER_KEY
     CONSUMER_SECRET = var.TWITTER_CONSUMER_SECRET
     ACCESS_KEY      = var.TWITTER_ACCESS_KEY
