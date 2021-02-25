@@ -1,0 +1,18 @@
+region = 
+
+# Cloud Run Server
+docker_image_url =
+request_token =
+
+# Slack
+SLACK_BOT_USER_TOKEN =
+SLACK_CLIENT_ID =
+SLACK_CLIENT_SECRET =
+SLACK_SIGNING_SECRET =
+STAGE =
+
+# Twitter
+TWITTER_CONSUMER_KEY =
+TWITTER_CONSUMER_SECRET =
+TWITTER_ACCESS_KEY =
+TWITTER_ACCESS_SECRET =

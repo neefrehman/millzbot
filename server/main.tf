@@ -7,20 +7,16 @@ terraform {
   }
 }
 
-locals {
-  region = "europe-west2"
-}
-
 provider "google" {
   credentials = file("millzbot-691b446280a5.json")
   project = "millzbot"
-  region  = local.region
+  region  = var.region
 }
 
 provider "archive" {}
 
 # 
-# TODO: Container
+# Docker image must be built then uploaded by the CLI
 # 
 
 
@@ -29,21 +25,23 @@ provider "archive" {}
 # 
 resource "google_cloud_run_service" "gpt" {
   name     = "gpt-tf"
-  location = local.region
+  location = var.region
   template {
     spec {
-      timeout_seconds       = 180
+      # timeout_seconds       = 180
       container_concurrency = 1
       containers {
-        image = "gcr.io/millzbot/gpt2:latest"
-        # memory & cpu allocated??
-        ports = {
-          container_port = 8080
+        image = var.docker_image_url
+        # memory_allocated = 2gb
+        # cpu_allocated = 2
+        env {
+          name = "PORT"
+          value = "8080"
         }
-        # env {
-        #   name = "SOURCE"
-        #   value = "remote"
-        # }
+        env {
+          name = "REQUEST_TOKEN"
+          value = var.request_token
+        }
       }
     }
   }
@@ -72,19 +70,18 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 }
 
 # Return service URL
-output "cloud run url" {
-  value = "${google_cloud_run_service.gpt.status[0].url}"
+output "cloud_run_url" {
+  value = google_cloud_run_service.gpt.status[0].url
 }
 
 
 # 
 # CLOUD FUNCTIONS
 # 
-
 # Cloud functions — store
 resource "google_storage_bucket" "functions_source_store" {
   name   = "functions_source_store"
-  location = local.region
+  location = var.region
 }
 
 
@@ -110,11 +107,11 @@ resource "google_cloudfunctions_function" "handle_frontend_request" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_frontend_request"
-  region                = local.region
+  region                = var.region
 
-  # environment_variables = {
-  #   MY_ENV_VAR = "my-env-var-value"
-  # }
+  environment_variables = {
+    REQUEST_TOKEN = var.request_token
+  }
 }
 
 
@@ -140,11 +137,16 @@ resource "google_cloudfunctions_function" "handle_slack_request" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_slack_request"
-  region                = local.region
+  region                = var.region
 
-  # environment_variables = {
-  #   MY_ENV_VAR = "my-env-var-value"
-  # }
+  environment_variables = {
+    REQUEST_TOKEN        = var.request_token
+    SLACK_BOT_USER_TOKEN = var.SLACK_BOT_USER_TOKEN
+    SLACK_CLIENT_ID      = var.SLACK_CLIENT_ID
+    SLACK_CLIENT_SECRET  = var.SLACK_CLIENT_SECRET
+    SLACK_SIGNING_SECRET = var.SLACK_SIGNING_SECRET
+    STAGE                = var.STAGE
+  }
 }
 
 
@@ -170,11 +172,15 @@ resource "google_cloudfunctions_function" "handle_post_tweet" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_post_tweet"
-  region                = local.region
+  region                = var.region
 
-  # environment_variables = {
-  #   MY_ENV_VAR = "my-env-var-value"
-  # }
+  environment_variables = {
+    REQUEST_TOKEN   = var.request_token
+    CONSUMER_KEY    = var.TWITTER_CONSUMER_KEY
+    CONSUMER_SECRET = var.TWITTER_CONSUMER_SECRET
+    ACCESS_KEY      = var.TWITTER_ACCESS_KEY
+    ACCESS_SECRET   = var.TWITTER_ACCESS_SECRET
+  }
 }
 
 # Cloud function scheduler — twitter
@@ -183,10 +189,10 @@ resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
   description      = "run handle_post_tweet function"
   schedule         = "0 8,12,17 * * *"
   time_zone        = "Africa/Abidjan"
-  region           = local.region
+  region           = var.region
 
   http_target {
     http_method = "POST"
-    uri         = google_cloudfunctions_function.handle_post_tweet_tf.https_trigger_url
+    uri         = google_cloudfunctions_function.handle_post_tweet.https_trigger_url
   }
 }

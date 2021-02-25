@@ -16,5 +16,6 @@ __pycache__
 **/.terraform/*
 
 # .tfstate files
+terraform.tfvars
 *.tfstate
 *.tfstate.*
