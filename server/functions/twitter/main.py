@@ -15,7 +15,7 @@ ACCESS_SECRET = os.environ.get('ACCESS_SECRET', None)
 assert all([CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET]
            ), "Not all Twitter tokens have been specified."
 
-MODEL_ENDPOINT = 'https://gpt-tfsma6beea-ez.a.run.app/'
+MODEL_ENDPOINT = os.environ.get('MODEL_ENDPOINT', None)
 REQUEST_TOKEN = os.environ.get('REQUEST_TOKEN', None)
 
 
