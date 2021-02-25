@@ -19,10 +19,67 @@ provider "google" {
 
 provider "archive" {}
 
+# 
+# TODO: Container
+# 
 
-# TODO: docker image
-# TODO: cloud run
 
+# 
+# Cloud Run
+# 
+resource "google_cloud_run_service" "gpt" {
+  name     = "gpt-tf"
+  location = local.region
+  template {
+    spec {
+      timeout_seconds       = 180
+      container_concurrency = 1
+      containers {
+        image = "gcr.io/millzbot/gpt2:latest"
+        # memory & cpu allocated??
+        ports = {
+          container_port = 8080
+        }
+        # env {
+        #   name = "SOURCE"
+        #   value = "remote"
+        # }
+      }
+    }
+  }
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+}
+
+# Create public access
+data "google_iam_policy" "noauth" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers",
+    ]
+  }
+}
+
+# Enable public access on Cloud Run service
+resource "google_cloud_run_service_iam_policy" "noauth" {
+  location    = google_cloud_run_service.gpt.location
+  project     = google_cloud_run_service.gpt.project
+  service     = google_cloud_run_service.gpt.name
+  policy_data = data.google_iam_policy.noauth.policy_data
+}
+
+# Return service URL
+output "cloud run url" {
+  value = "${google_cloud_run_service.gpt.status[0].url}"
+}
+
+
+# 
+# CLOUD FUNCTIONS
+# 
 
 # Cloud functions — store
 resource "google_storage_bucket" "functions_source_store" {
@@ -120,7 +177,7 @@ resource "google_cloudfunctions_function" "handle_post_tweet" {
   # }
 }
 
-# Cloud scheduler — twitter
+# Cloud function scheduler — twitter
 resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
   name             = "post-scheduled-tweet-tf"
   description      = "run handle_post_tweet function"
