@@ -104,7 +104,7 @@ resource "google_storage_bucket_object" "twitter_source_code" {
   source = data.archive_file.twitter_source_dist.output_path
 }
 
-resource "google_cloudfunctions_function" "handle_post_tweet_tf" {
+resource "google_cloudfunctions_function" "handle_post_tweet" {
   name        = "handle_post_tweet-tf"
   runtime     = "Python 3.7"
   available_memory_mb   = 256
@@ -121,7 +121,7 @@ resource "google_cloudfunctions_function" "handle_post_tweet_tf" {
 }
 
 # Cloud scheduler — twitter
-resource "google_cloud_scheduler_job" "job" {
+resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
   name             = "post-scheduled-tweet-tf"
   description      = "run handle_post_tweet function"
   schedule         = "0 8,12,17 * * *"
