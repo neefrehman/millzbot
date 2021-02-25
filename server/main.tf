@@ -15,8 +15,9 @@ provider "google" {
 
 provider "archive" {}
 
+
 # 
-# Docker image must be built then uploaded by the CLI
+# Docker image must be built and uploaded by the CLI
 # 
 
 
@@ -34,14 +35,14 @@ resource "google_cloud_run_service" "gpt" {
         image = var.docker_image_url
         # memory_allocated = 2gb
         # cpu_allocated = 2
-        env {
-          name = "PORT"
-          value = "8080"
-        }
-        env {
-          name = "REQUEST_TOKEN"
-          value = var.request_token
-        }
+        # env {
+        #   name = "PORT"
+        #   value = "8080"
+        # }
+        # env {
+        #   name = "REQUEST_TOKEN"
+        #   value = var.request_token
+        # }
       }
     }
   }
