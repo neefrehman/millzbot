@@ -20,10 +20,12 @@ provider "google" {
 provider "archive" {}
 
 
-resource "google_storage_bucket" "functions_store" {
-  name   = "functions_store"
+
+resource "google_storage_bucket" "functions_source_store" {
+  name   = "functions_source_store"
   location = local.region
 }
+
 
 
 data "archive_file" "twitter_source_dist" {
@@ -34,15 +36,15 @@ data "archive_file" "twitter_source_dist" {
 
 resource "google_storage_bucket_object" "twitter_source_code" {
   name   = "twitter-source-code"
-  bucket = google_storage_bucket.functions_store.name
+  bucket = google_storage_bucket.functions_source_store.name
   source = data.archive_file.twitter_source_dist.output_path
 }
 
-resource "google_cloudfunctions_function" "handle_post_tweet" {
+resource "google_cloudfunctions_function" "handle_post_tweet_tf" {
   name        = "handle_post_tweet-tf"
   runtime     = "Python 3.7"
   available_memory_mb   = 256
-  source_archive_bucket = google_storage_bucket.functions_store.name
+  source_archive_bucket = google_storage_bucket.functions_source_store.name
   source_archive_object = google_storage_bucket_object.twitter_source_code.name
   trigger_http          = true
   timeout               = 180
@@ -63,6 +65,34 @@ resource "google_cloud_scheduler_job" "job" {
 
   http_target {
     http_method = "POST"
-    uri         = google_cloudfunctions_function.handle_post_tweet.https_trigger_url
+    uri         = google_cloudfunctions_function.handle_post_tweet_tf.https_trigger_url
   }
+}
+
+
+
+data "archive_file" "frontend_source_dist" {
+  type        = "zip"
+  source_dir  = "./functions/frontend"
+  output_path = "./functions/dist/frontend_source.zip"
+}
+
+resource "google_storage_bucket_object" "frontend_source_code" {
+  name   = "frontend-source-code"
+  bucket = google_storage_bucket.functions_source_store.name
+  source = data.archive_file.frontend_source_dist.output_path
+}
+
+
+
+data "archive_file" "slack_source_dist" {
+  type        = "zip"
+  source_dir  = "./functions/slack"
+  output_path = "./functions/dist/slack_source.zip"
+}
+
+resource "google_storage_bucket_object" "slack_source_code" {
+  name   = "slack-source-code"
+  bucket = google_storage_bucket.functions_source_store.name
+  source = data.archive_file.slack_source_dist.output_path
 }
