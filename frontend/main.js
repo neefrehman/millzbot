@@ -4,8 +4,8 @@ const promptInput = document.querySelector("input[type=text]");
 const chatWindow = document.querySelector(".chat-window");
 const responseContainer = document.querySelector(".response-container");
 
-const endpoint_url =
-    "https://us-central1-millzbot.cloudfunctions.net/handle_frontend_request";
+const ENDPOINT_URL =
+    "https://europe-west2-millzbot.cloudfunctions.net/handle_frontend_request";
 
 promptButton.addEventListener("click", () => {
     promptInput.style.display = "inline-block";
@@ -57,7 +57,7 @@ form.onsubmit = async (event) => {
 
     promptInput.value = null;
 
-    const request = await fetch(endpoint_url, {
+    const request = await fetch(ENDPOINT_URL, {
         method: "POST",
         headers: {
             Accept: "application/json",

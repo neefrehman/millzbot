@@ -16,9 +16,8 @@ SLACK_SIGNING_SECRET = os.environ["SLACK_SIGNING_SECRET"]
 SLACK_CLIENT_ID = os.environ["SLACK_CLIENT_ID"]
 SLACK_CLIENT_SECRET = os.environ["SLACK_CLIENT_SECRET"]
 REQUEST_TOKEN = os.environ["REQUEST_TOKEN"]
+MODEL_ENDPOINT = os.environ["MODEL_ENDPOINT"]
 STAGE = os.environ.get("STAGE", None)
-
-MODEL_ENDPOINT = "https://gpt-tfsma6beea-ez.a.run.app/"
 
 slack_client = WebClient(token=SLACK_BOT_USER_TOKEN)
 signature_verifier = SignatureVerifier(os.environ["SLACK_SIGNING_SECRET"])

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 REQUEST_TOKEN = os.environ["REQUEST_TOKEN"]
-MODEL_ENDPOINT = "https://gpt-tfsma6beea-ez.a.run.app/"
+MODEL_ENDPOINT = os.environ["MODEL_ENDPOINT"]
 
 def handle_frontend_request(request):
     # Handle CORS headers for initial options request
