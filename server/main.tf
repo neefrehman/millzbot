@@ -16,6 +16,7 @@ provider "google" {
 provider "archive" {}
 
 
+
 # 
 # Docker image must be built and uploaded by the CLI
 # and its image url added to terraform.tfvars
@@ -24,7 +25,7 @@ provider "archive" {}
 
 
 # 
-# Cloud Run
+# CLOUD RUN
 # 
 resource "google_cloud_run_service" "gpt" {
   name     = "gpt"
