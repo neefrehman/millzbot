@@ -1,6 +1,6 @@
-project_name = "millzbot"
-region = "europe-west2"
-credentials_file = 
+gcp_project_name = "millzbot"
+gcp_region = "europe-west2"
+gcp_credentials_file_name = "[XXXXXXXXX].json"
 
 # Cloud Run Server
 docker_image_url =

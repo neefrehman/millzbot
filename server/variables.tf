@@ -1,12 +1,12 @@
-variable "project_name" {
+variable "gcp_project_name" {
   type = string
 }
 
-variable "credentials_file" {
+variable "gcp_credentials_file_name" {
   type = string
 }
 
-variable "region" {
+variable "gcp_region" {
   type = string
 }
 

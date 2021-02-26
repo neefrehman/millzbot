@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "google" {
-  credentials = file(var.credentials_file) # this file must be downloaded from gcp
-  project = var.project_name
-  region  = var.region
+  credentials = file(var.gcp_credentials_file_name) # this file must be downloaded from gcp
+  project = var.gcp_project_name
+  region  = var.gcp_region
 }
 
 provider "archive" {}
@@ -29,7 +29,7 @@ provider "archive" {}
 # 
 resource "google_cloud_run_service" "gpt" {
   name     = "gpt"
-  location = var.region
+  location = var.gcp_region
   template {
     spec {
       container_concurrency = 1
@@ -81,7 +81,7 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 # Cloud functions — store
 resource "google_storage_bucket" "functions_source_store" {
   name   = "functions_source_store"
-  location = var.region
+  location = var.gcp_region
 }
 
 
@@ -107,7 +107,7 @@ resource "google_cloudfunctions_function" "handle_frontend_request" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_frontend_request"
-  region                = var.region
+  region                = var.gcp_region
 
   environment_variables = {
     MODEL_ENDPOINT = google_cloud_run_service.gpt.status[0].url
@@ -151,7 +151,7 @@ resource "google_cloudfunctions_function" "handle_slack_request" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_slack_request"
-  region                = var.region
+  region                = var.gcp_region
 
   environment_variables = {
     MODEL_ENDPOINT       = google_cloud_run_service.gpt.status[0].url
@@ -200,7 +200,7 @@ resource "google_cloudfunctions_function" "handle_post_tweet" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_post_tweet"
-  region                = var.region
+  region                = var.gcp_region
 
   environment_variables = {
     MODEL_ENDPOINT  = google_cloud_run_service.gpt.status[0].url
@@ -227,7 +227,7 @@ resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
   description      = "run handle_post_tweet function"
   schedule         = "0 8,12,17 * * *"
   time_zone        = "Africa/Abidjan"
-  region           = var.region
+  region           = var.gcp_region
 
   http_target {
     http_method = "POST"
