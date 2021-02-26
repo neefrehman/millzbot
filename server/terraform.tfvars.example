@@ -1,4 +1,6 @@
+project_name = "millzbot"
 region = "europe-west2"
+credentials_file = 
 
 # Cloud Run Server
 docker_image_url =

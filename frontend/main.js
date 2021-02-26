@@ -5,7 +5,7 @@ const chatWindow = document.querySelector(".chat-window");
 const responseContainer = document.querySelector(".response-container");
 
 const ENDPOINT_URL =
-    "https://europe-west2-millzbot.cloudfunctions.net/handle_frontend_request-tf";
+    "https://europe-west2-millzbot.cloudfunctions.net/handle_frontend_request";
 
 promptButton.addEventListener("click", () => {
     promptInput.style.display = "inline-block";

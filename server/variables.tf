@@ -1,3 +1,11 @@
+variable "project_name" {
+  type = string
+}
+
+variable "credentials_file" {
+  type = string
+}
+
 variable "region" {
   type = string
 }

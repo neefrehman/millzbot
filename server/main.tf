@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("millzbot-691b446280a5.json") # this file must be downloaded from gcp
-  project = "millzbot"
+  credentials = file(var.credentials_file) # this file must be downloaded from gcp
+  project = var.project_name
   region  = var.region
 }
 
@@ -27,7 +27,7 @@ provider "archive" {}
 # Cloud Run
 # 
 resource "google_cloud_run_service" "gpt" {
-  name     = "gpt-tf"
+  name     = "gpt"
   location = var.region
   template {
     spec {
@@ -98,7 +98,7 @@ resource "google_storage_bucket_object" "frontend_source_code" {
 }
 
 resource "google_cloudfunctions_function" "handle_frontend_request" {
-  name        = "handle_frontend_request-tf"
+  name        = "handle_frontend_request"
   runtime     = "python37"
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.functions_source_store.name
@@ -142,7 +142,7 @@ resource "google_storage_bucket_object" "slack_source_code" {
 }
 
 resource "google_cloudfunctions_function" "handle_slack_request" {
-  name        = "handle_slack_request-tf"
+  name        = "handle_slack_request"
   runtime     = "python37"
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.functions_source_store.name
@@ -191,7 +191,7 @@ resource "google_storage_bucket_object" "twitter_source_code" {
 }
 
 resource "google_cloudfunctions_function" "handle_post_tweet" {
-  name        = "handle_post_tweet-tf"
+  name        = "handle_post_tweet"
   runtime     = "python37"
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.functions_source_store.name
@@ -222,7 +222,7 @@ resource "google_cloudfunctions_function_iam_member" "twitter_invoker" {
 
 # Cloud function scheduler — twitter
 resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
-  name             = "post-scheduled-tweet-tf"
+  name             = "post-scheduled-tweet"
   description      = "run handle_post_tweet function"
   schedule         = "0 8,12,17 * * *"
   time_zone        = "Africa/Abidjan"
