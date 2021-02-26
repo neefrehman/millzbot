@@ -2,13 +2,13 @@ terraform {
   required_providers {
     google = {
       source = "hashicorp/google"
-      version = "3.5.0"
+      version = "3.58.0"
     }
   }
 }
 
 provider "google" {
-  credentials = file("millzbot-691b446280a5.json")
+  credentials = file("millzbot-691b446280a5.json") # this file must be downloaded from gcp
   project = "millzbot"
   region  = var.region
 }
@@ -22,6 +22,7 @@ provider "archive" {}
 # 
 
 
+
 # 
 # Cloud Run
 # 
@@ -30,20 +31,20 @@ resource "google_cloud_run_service" "gpt" {
   location = var.region
   template {
     spec {
-      # timeout_seconds       = 180
       container_concurrency = 1
+      timeout_seconds       = 180
       containers {
         image = var.docker_image_url
-        # memory_allocated = 2gb
-        # cpu_allocated = 2
-        # env {
-        #   name = "PORT"
-        #   value = "8080"
-        # }
-        # env {
-        #   name = "REQUEST_TOKEN"
-        #   value = var.request_token
-        # }
+        resources {
+          limits = {
+            cpu    = "2"
+            memory = "2G"
+          }
+        }
+        env {
+          name = "REQUEST_TOKEN"
+          value = var.request_token
+        }
       }
     }
   }
@@ -71,10 +72,6 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
   policy_data = data.google_iam_policy.noauth.policy_data
 }
 
-# Return service URL
-output "cloud_run_url" {
-  value = google_cloud_run_service.gpt.status[0].url
-}
 
 
 # 
@@ -102,7 +99,7 @@ resource "google_storage_bucket_object" "frontend_source_code" {
 
 resource "google_cloudfunctions_function" "handle_frontend_request" {
   name        = "handle_frontend_request-tf"
-  runtime     = "Python 3.7"
+  runtime     = "python37"
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.functions_source_store.name
   source_archive_object = google_storage_bucket_object.frontend_source_code.name
@@ -112,9 +109,22 @@ resource "google_cloudfunctions_function" "handle_frontend_request" {
   region                = var.region
 
   environment_variables = {
-    REQUEST_TOKEN  = var.request_token
     MODEL_ENDPOINT = google_cloud_run_service.gpt.status[0].url
+    REQUEST_TOKEN  = var.request_token
   }
+}
+
+resource "google_cloudfunctions_function_iam_member" "frontend_invoker" {
+  project        = google_cloudfunctions_function.handle_frontend_request.project
+  region         = google_cloudfunctions_function.handle_frontend_request.region
+  cloud_function = google_cloudfunctions_function.handle_frontend_request.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
+}
+
+output "frontend_endpoint_url" {
+  value = google_cloudfunctions_function.handle_frontend_request.https_trigger_url
 }
 
 
@@ -133,7 +143,7 @@ resource "google_storage_bucket_object" "slack_source_code" {
 
 resource "google_cloudfunctions_function" "handle_slack_request" {
   name        = "handle_slack_request-tf"
-  runtime     = "Python 3.7"
+  runtime     = "python37"
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.functions_source_store.name
   source_archive_object = google_storage_bucket_object.slack_source_code.name
@@ -143,14 +153,27 @@ resource "google_cloudfunctions_function" "handle_slack_request" {
   region                = var.region
 
   environment_variables = {
-    REQUEST_TOKEN        = var.request_token
     MODEL_ENDPOINT       = google_cloud_run_service.gpt.status[0].url
+    REQUEST_TOKEN        = var.request_token
     SLACK_BOT_USER_TOKEN = var.SLACK_BOT_USER_TOKEN
     SLACK_CLIENT_ID      = var.SLACK_CLIENT_ID
     SLACK_CLIENT_SECRET  = var.SLACK_CLIENT_SECRET
     SLACK_SIGNING_SECRET = var.SLACK_SIGNING_SECRET
     STAGE                = var.STAGE
   }
+}
+
+resource "google_cloudfunctions_function_iam_member" "slack_invoker" {
+  project        = google_cloudfunctions_function.handle_slack_request.project
+  region         = google_cloudfunctions_function.handle_slack_request.region
+  cloud_function = google_cloudfunctions_function.handle_slack_request.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
+}
+
+output "slack_endpoint_url" {
+  value = google_cloudfunctions_function.handle_slack_request.https_trigger_url
 }
 
 
@@ -169,7 +192,7 @@ resource "google_storage_bucket_object" "twitter_source_code" {
 
 resource "google_cloudfunctions_function" "handle_post_tweet" {
   name        = "handle_post_tweet-tf"
-  runtime     = "Python 3.7"
+  runtime     = "python37"
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.functions_source_store.name
   source_archive_object = google_storage_bucket_object.twitter_source_code.name
@@ -179,13 +202,22 @@ resource "google_cloudfunctions_function" "handle_post_tweet" {
   region                = var.region
 
   environment_variables = {
-    REQUEST_TOKEN   = var.request_token
     MODEL_ENDPOINT  = google_cloud_run_service.gpt.status[0].url
+    REQUEST_TOKEN   = var.request_token
     CONSUMER_KEY    = var.TWITTER_CONSUMER_KEY
     CONSUMER_SECRET = var.TWITTER_CONSUMER_SECRET
     ACCESS_KEY      = var.TWITTER_ACCESS_KEY
     ACCESS_SECRET   = var.TWITTER_ACCESS_SECRET
   }
+}
+
+resource "google_cloudfunctions_function_iam_member" "twitter_invoker" {
+  project        = google_cloudfunctions_function.handle_post_tweet.project
+  region         = google_cloudfunctions_function.handle_post_tweet.region
+  cloud_function = google_cloudfunctions_function.handle_post_tweet.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
 }
 
 # Cloud function scheduler — twitter

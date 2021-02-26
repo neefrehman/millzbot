@@ -1,4 +1,4 @@
-region = 
+region = "europe-west2"
 
 # Cloud Run Server
 docker_image_url =
