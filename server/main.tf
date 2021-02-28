@@ -226,7 +226,7 @@ resource "google_cloudfunctions_function_iam_member" "twitter_invoker" {
 resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
   name             = "post-scheduled-tweet"
   description      = "run handle_post_tweet function"
-  schedule         = "0 8,12,17 * * *"
+  schedule         = "0 8,12,17 * * 1-5"
   time_zone        = "Africa/Abidjan"
   region           = var.gcp_region
 
