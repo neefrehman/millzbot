@@ -156,6 +156,7 @@ resource "google_cloudfunctions_function" "handle_slack_request" {
   environment_variables = {
     MODEL_ENDPOINT       = google_cloud_run_service.gpt.status[0].url
     REQUEST_TOKEN        = var.request_token
+    SLACK_BOT_NAME       = var.SLACK_BOT_NAME
     SLACK_BOT_USER_TOKEN = var.SLACK_BOT_USER_TOKEN
     SLACK_CLIENT_ID      = var.SLACK_CLIENT_ID
     SLACK_CLIENT_SECRET  = var.SLACK_CLIENT_SECRET

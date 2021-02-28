@@ -20,6 +20,11 @@ variable "request_token" {
   sensitive   = true
 }
 
+variable "SLACK_BOT_NAME" {
+  type        = string
+  sensitive   = true
+}
+
 variable "SLACK_BOT_USER_TOKEN" {
   type        = string
   sensitive   = true

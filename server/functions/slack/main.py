@@ -11,6 +11,7 @@ from slack.signature import SignatureVerifier
 from dotenv import load_dotenv
 
 load_dotenv()
+SLACK_BOT_NAME = os.environ["SLACK_BOT_NAME"]
 SLACK_BOT_USER_TOKEN = os.environ["SLACK_BOT_USER_TOKEN"]
 SLACK_SIGNING_SECRET = os.environ["SLACK_SIGNING_SECRET"]
 SLACK_CLIENT_ID = os.environ["SLACK_CLIENT_ID"]
@@ -59,9 +60,9 @@ def handle_slack_request(request):
     if slack_event["type"] == "app_mention":
         input_text = slack_event["text"]
         channel_id = slack_event["channel"]
-        bot_name = "<@U015GFAC2AE>"
+        bot_name = SLACK_BOT_NAME
         # ^This was tricky to find. I had to change this script to get millzbot to respond with:
-        # input_text.replace("<@", "")) to get the bot name without Slack's formatting
+        # input_text.replace("<@", "")) to get the raw bot name (without Slack's formatting). it should look like: <@X000XXXX0XX>
 
         prompt_text = input_text.replace(bot_name, "")
         prompt_text = "<|startoftext|>" if len(
