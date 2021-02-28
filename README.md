@@ -23,7 +23,7 @@ Luckily, it is that good! Millzbot lives [on Twitter](https://twitter.com/millzb
 
 ## Make your own
 
-On the whole the process was surprisingly easy, thanks hugely to [Max Woolf](https://github.com/minimaxir) and the writing/tools that he's already created around GPT-2. In this repo you'll find a summary of the process I used to make millzbot (with links to the guides and resources I used), and some of Max's tweet-fetching and server code. You'll also see some of my additional code, like middleware API layers to provide responses from the trained model to different platforms (Slack, Twitter and the demo site), written as serverless functions.
+On the whole the process was surprisingly easy, thanks hugely to [Max Woolf](https://github.com/minimaxir) and the writing/tools that he's already created around GPT-2. In this repo you'll find a summary of the process I used to make millzbot (with links to the guides and resources I used), and some of Max's tweet-fetching and server code. You'll also see some of my additional code, like declarative terraform infrastructure and middleware API layers to provide responses from the trained model to various platforms (Slack, Twitter and the demo site), written as serverless functions.
 
 The instructions below and code in this project's folders should cover everything you need to do the following:
 
