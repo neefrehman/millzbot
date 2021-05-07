@@ -88,8 +88,8 @@ resource "google_storage_bucket" "functions_source_store" {
 # Cloud functions — frontend
 data "archive_file" "frontend_source_dist" {
   type        = "zip"
-  source_dir  = "./functions/frontend"
-  output_path = "./functions/dist/frontend_source.zip"
+  source_dir  = "../functions/frontend"
+  output_path = "../functions/dist/frontend_source.zip"
 }
 
 resource "google_storage_bucket_object" "frontend_source_code" {
@@ -132,8 +132,8 @@ output "frontend_endpoint_url" {
 # Cloud functions — slack
 data "archive_file" "slack_source_dist" {
   type        = "zip"
-  source_dir  = "./functions/slack"
-  output_path = "./functions/dist/slack_source.zip"
+  source_dir  = "../functions/slack"
+  output_path = "../functions/dist/slack_source.zip"
 }
 
 resource "google_storage_bucket_object" "slack_source_code" {
@@ -182,8 +182,8 @@ output "slack_endpoint_url" {
 # Cloud functions — twitter
 data "archive_file" "twitter_source_dist" {
   type        = "zip"
-  source_dir  = "./functions/twitter"
-  output_path = "./functions/dist/twitter_source.zip"
+  source_dir  = "../functions/twitter"
+  output_path = "../functions/dist/twitter_source.zip"
 }
 
 resource "google_storage_bucket_object" "twitter_source_code" {

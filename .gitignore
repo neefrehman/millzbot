@@ -1,8 +1,7 @@
 training/data
 training/output
 
-server/.terraform/
-server/millzbot-691b446280a5.json
+server/infrastructure/millzbot-691b446280a5.json
 server/model/checkpoint
 server/functions/dist
 
@@ -13,9 +12,11 @@ __pycache__
 .netlify
 
 # Local .terraform directories
-**/.terraform/*
+**/.terraform/
 
 # .tfstate files
 terraform.tfvars
 *.tfstate
 *.tfstate.*
+
+.DS_STORE
