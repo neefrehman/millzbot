@@ -58,9 +58,7 @@ form.onsubmit = async (event) => {
     promptInput.value = null;
 
     const longResponseTimeout = setTimeout(() => {
-        if (form.getAttribute("disabled") === "true") {
-            addBubble("response", "I'm taking a while. Must be busy right now!");
-        }
+        addBubble("response", "I'm taking a while. Must be busy right now!");
     }, 60000);
 
     const request = await fetch(ENDPOINT_URL, {
