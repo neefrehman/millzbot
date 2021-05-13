@@ -1,10 +1,10 @@
-gcp_project_name = "millzbot"
-gcp_region = "europe-west2"
-gcp_credentials_file_name = "[XXXXXXXXX].json"
+GCP_PROJECT_NAME = "millzbot"
+GCP_REGION = "europe-west2"
+GCP_CREDENTIALS_FILE_NAME = "[XXXXXXXXX].json"
 
 # Cloud Run Server
-docker_image_url =
-request_token =
+DOCKER_IMAGE_URL =
+REQUEST_TOKEN =
 
 # Slack
 SLACK_BOT_NAME = 

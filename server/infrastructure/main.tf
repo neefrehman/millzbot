@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "google" {
-  credentials = file(var.gcp_credentials_file_name) # this file must be downloaded from gcp
-  project = var.gcp_project_name
-  region  = var.gcp_region
+  credentials = file(var.GCP_CREDENTIALS_FILE_NAME) # this file must be downloaded from gcp
+  project = var.GCP_PROJECT_NAME
+  region  = var.GCP_REGION
 }
 
 provider "archive" {}
@@ -29,13 +29,13 @@ provider "archive" {}
 # 
 resource "google_cloud_run_service" "gpt" {
   name     = "gpt"
-  location = var.gcp_region
+  location = var.GCP_REGION
   template {
     spec {
       container_concurrency = 1
       timeout_seconds       = 180
       containers {
-        image = var.docker_image_url
+        image = var.DOCKER_IMAGE_URL
         resources {
           limits = {
             cpu    = "2"
@@ -44,7 +44,7 @@ resource "google_cloud_run_service" "gpt" {
         }
         env {
           name = "REQUEST_TOKEN"
-          value = var.request_token
+          value = var.REQUEST_TOKEN
         }
       }
     }
@@ -81,7 +81,7 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 # Cloud functions — store
 resource "google_storage_bucket" "functions_source_store" {
   name   = "functions_source_store"
-  location = var.gcp_region
+  location = var.GCP_REGION
 }
 
 
@@ -107,11 +107,11 @@ resource "google_cloudfunctions_function" "handle_frontend_request" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_frontend_request"
-  region                = var.gcp_region
+  region                = var.GCP_REGION
 
   environment_variables = {
     MODEL_ENDPOINT = google_cloud_run_service.gpt.status[0].url
-    REQUEST_TOKEN  = var.request_token
+    REQUEST_TOKEN  = var.REQUEST_TOKEN
   }
 }
 
@@ -151,11 +151,11 @@ resource "google_cloudfunctions_function" "handle_slack_request" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_slack_request"
-  region                = var.gcp_region
+  region                = var.GCP_REGION
 
   environment_variables = {
     MODEL_ENDPOINT       = google_cloud_run_service.gpt.status[0].url
-    REQUEST_TOKEN        = var.request_token
+    REQUEST_TOKEN        = var.REQUEST_TOKEN
     SLACK_BOT_NAME       = var.SLACK_BOT_NAME
     SLACK_BOT_USER_TOKEN = var.SLACK_BOT_USER_TOKEN
     SLACK_CLIENT_ID      = var.SLACK_CLIENT_ID
@@ -201,11 +201,11 @@ resource "google_cloudfunctions_function" "handle_post_tweet" {
   trigger_http          = true
   timeout               = 180
   entry_point           = "handle_post_tweet"
-  region                = var.gcp_region
+  region                = var.GCP_REGION
 
   environment_variables = {
     MODEL_ENDPOINT  = google_cloud_run_service.gpt.status[0].url
-    REQUEST_TOKEN   = var.request_token
+    REQUEST_TOKEN   = var.REQUEST_TOKEN
     CONSUMER_KEY    = var.TWITTER_CONSUMER_KEY
     CONSUMER_SECRET = var.TWITTER_CONSUMER_SECRET
     ACCESS_KEY      = var.TWITTER_ACCESS_KEY
@@ -228,7 +228,7 @@ resource "google_cloud_scheduler_job" "post_scheduled_tweet" {
   description      = "run handle_post_tweet function"
   schedule         = "0 8,12,17 * * 1-5"
   time_zone        = "Africa/Abidjan"
-  region           = var.gcp_region
+  region           = var.GCP_REGION
 
   http_target {
     http_method = "POST"

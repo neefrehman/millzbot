@@ -1,4 +1,4 @@
-# These guides were helpful for building a serverless pyhton function with the slack API:
+# These guides were helpful for building a serverless python function with the slack API:
 # https://chatbotslife.com/write-a-serverless-slack-chat-bot-using-aws-e2d2432c380e
 # https://github.com/slackapi/python-slackclient
 

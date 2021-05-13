@@ -1,21 +1,21 @@
-variable "gcp_project_name" {
+variable "GCP_PROJECT_NAME" {
   type = string
 }
 
-variable "gcp_credentials_file_name" {
+variable "GCP_CREDENTIALS_FILE_NAME" {
   type = string
 }
 
-variable "gcp_region" {
+variable "GCP_REGION" {
   type = string
 }
 
-variable "docker_image_url" {
+variable "DOCKER_IMAGE_URL" {
   type        = string
   sensitive   = true
 }
 
-variable "request_token" {
+variable "REQUEST_TOKEN" {
   type        = string
   sensitive   = true
 }
