@@ -1,19 +1,20 @@
 training/data
 training/output
 
-server/model/checkpoint
-server/functions/dist
+backend/model/checkpoint
+backend/functions/dist
 
 __pycache__
 .env
 .temp
+
 # Local Netlify folder
 .netlify
 
 # Local .terraform directories
 **/.terraform/
 
-# .tfstate files
+# tf state and var files
 terraform.tfvars
 *.tfstate
 *.tfstate.*
